@@ -64,7 +64,7 @@
         <!-- Declare assets here. These are things like images or 3D models. -->
 
         <!-- Example of how to declare a 3D model asset. -->
-        <a-asset-item id="3DModel-obj" src="/Enviroment_GroupTrees.obj"></a-asset-item preload="auto">
+        <a-asset-item id="3DModel-obj" src="Enviroment_GroupTrees.obj"></a-asset-item preload="auto">
         <!-- Example of how to declare a skin for a 3D model asset. -->
         <!--<a-asset-item id="3DModel-mtl" src="3DModel.mtl"></a-asset-item>-->
 
@@ -108,7 +108,7 @@
 
         <!-- 3D Model example -->
         <!-- see: https://aframe.io/docs/0.8.0/primitives/a-obj-model.html -->
-        <a-obj-model id="my3DModel" src="#Enviroment_GroupTrees-obj" position="0 0 0" rotation="0 0 0" scale=".1 .1 .1" material="opacity: 0.9; side:double; color: orange;"></a-obj-model>
+        <a-obj-model id="my3DModel" src="#3DModel-obj" position="0 0 0" rotation="0 0 0" scale=".1 .1 .1" material="opacity: 0.9; side:double; color: orange;"></a-obj-model>
         <!-- 3D Model example with skin -->
         <!--<a-obj-model id="my3DModel" src="#3DModel-obj" mtl="#3DModel-mtl" position="0 0 0" rotation="0 0 0" scale="1 1 1" material="opacity: 1.0; side:double;"></a-obj-model>-->
 
