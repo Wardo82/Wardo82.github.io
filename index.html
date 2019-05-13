@@ -1,209 +1,125 @@
-<!DOCTYPE HTML>
-<!--
-	Hyperspace by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>Hyperspace by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
 
-		<!-- Sidebar -->
-			<section id="sidebar">
-				<div class="inner">
-					<nav>
-						<ul>
-							<li><a href="#intro">Welcome</a></li>
-							<li><a href="#one">Who we are</a></li>
-							<li><a href="#two">What we do</a></li>
-							<li><a href="#three">Get in touch</a></li>
-						</ul>
-					</nav>
-				</div>
-			</section>
+    <!--
+    AR.js workshop
+    Author: Matt Nutsch
+    Date: 6-20-2018
+    Description: This is sample code for a workshop on developing an AR.js app.
+    Notes:
+    This code is based in part on Jerome Etienne's examples of AR.js at: https://github.com/jeromeetienne/AR.js/tree/master/aframe
+    It is also based in part on the AFrame documentation, available at: https://aframe.io/docs
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+    Go to this URL to run this code in a mobile web browser: https://mnutsch.github.io/arjs_workshop/start/index.html
+    Download and print this image for the AR target marker: https://github.com/mnutsch/mnutsch.github.io/raw/master/arjs_workshop/start/Hiro%20pattern%20with%20border.pdf
+    -->
 
-				<!-- Intro -->
-					<section id="intro" class="wrapper style1 fullscreen fade-up">
-						<div class="inner">
-							<h1>Hyperspace</h1>
-							<p>Just another fine responsive site template designed by <a href="http://html5up.net">HTML5 UP</a><br />
-							and released for free under the <a href="http://html5up.net/license">Creative Commons</a>.</p>
-							<ul class="actions">
-								<li><a href="#one" class="button scrolly">Learn more</a></li>
-							</ul>
-						</div>
-					</section>
+    <!-- include a-frame -->
+    <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
 
-				<!-- One -->
-					<section id="one" class="wrapper style2 spotlights">
-						<section>
-							<a href="#" class="image"><img src="images/pic01.jpg" alt="" data-position="center center" /></a>
-							<div class="content">
-								<div class="inner">
-									<h2>Sed ipsum dolor</h2>
-									<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus.</p>
-									<ul class="actions">
-										<li><a href="generic.html" class="button">Learn more</a></li>
-									</ul>
-								</div>
-							</div>
-						</section>
-						<section>
-							<a href="#" class="image"><img src="images/pic02.jpg" alt="" data-position="top center" /></a>
-							<div class="content">
-								<div class="inner">
-									<h2>Feugiat consequat</h2>
-									<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus.</p>
-									<ul class="actions">
-										<li><a href="generic.html" class="button">Learn more</a></li>
-									</ul>
-								</div>
-							</div>
-						</section>
-						<section>
-							<a href="#" class="image"><img src="images/pic03.jpg" alt="" data-position="25% 25%" /></a>
-							<div class="content">
-								<div class="inner">
-									<h2>Ultricies aliquam</h2>
-									<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus.</p>
-									<ul class="actions">
-										<li><a href="generic.html" class="button">Learn more</a></li>
-									</ul>
-								</div>
-							</div>
-						</section>
-					</section>
+    <!-- include ar.js for aframe -->
+    <script src='https://mnutsch.github.io/arjs_workshop/start/vendor/arjs/build/aframe-ar.js'></script>
+    <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
+    <!-- Note: the above libraries are included with absolute URL's, because Github.io seems to prefer those. Change them to relative URL's -->
 
-				<!-- Two -->
-					<section id="two" class="wrapper style3 fade-up">
-						<div class="inner">
-							<h2>What we do</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
-							<div class="features">
-								<section>
-									<span class="icon major fa-code"></span>
-									<h3>Lorem ipsum amet</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-								<section>
-									<span class="icon major fa-lock"></span>
-									<h3>Aliquam sed nullam</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-								<section>
-									<span class="icon major fa-cog"></span>
-									<h3>Sed erat ullam corper</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-								<section>
-									<span class="icon major fa-desktop"></span>
-									<h3>Veroeros quis lorem</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-								<section>
-									<span class="icon major fa-chain"></span>
-									<h3>Urna quis bibendum</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-								<section>
-									<span class="icon major fa-diamond"></span>
-									<h3>Aliquam urna dapibus</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-							</div>
-							<ul class="actions">
-								<li><a href="generic.html" class="button">Learn more</a></li>
-							</ul>
-						</div>
-					</section>
+    <script>		
+      //wait until the page loads to perform the following
+      window.onload = function () 
+      {
 
-				<!-- Three -->
-					<section id="three" class="wrapper style1 fade-up">
-						<div class="inner">
-							<h2>Get in touch</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
-							<div class="split style1">
-								<section>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="name">Name</label>
-												<input type="text" name="name" id="name" />
-											</div>
-											<div class="field half">
-												<label for="email">Email</label>
-												<input type="text" name="email" id="email" />
-											</div>
-											<div class="field">
-												<label for="message">Message</label>
-												<textarea name="message" id="message" rows="5"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><a href="" class="button submit">Send Message</a></li>
-										</ul>
-									</form>
-								</section>
-								<section>
-									<ul class="contact">
-										<li>
-											<h3>Address</h3>
-											<span>12345 Somewhere Road #654<br />
-											Nashville, TN 00000-0000<br />
-											USA</span>
-										</li>
-										<li>
-											<h3>Email</h3>
-											<a href="#">user@untitled.tld</a>
-										</li>
-										<li>
-											<h3>Phone</h3>
-											<span>(000) 000-0000</span>
-										</li>
-										<li>
-											<h3>Social</h3>
-											<ul class="icons">
-												<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-												<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-												<li><a href="#" class="fa-github"><span class="label">GitHub</span></a></li>
-												<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
-												<li><a href="#" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
-											</ul>
-										</li>
-									</ul>
-								</section>
-							</div>
-						</div>
-					</section>
+        var intervalLength = 20; //determines the speed of the animation (milliseconds to wait between ticks)
 
-			</div>
+        //define the scene, for ease of interacting with it
+        var scene = document.querySelector('a-scene');       
 
-		<!-- Footer -->
-			<footer id="footer" class="wrapper style1-alt">
-				<div class="inner">
-					<ul class="menu">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</div>
-			</footer>
+        //ADD JAVASCRIPT CODE HERE...
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+        //Timer for animations
+        setInterval(function()
+        {
 
-	</body>
+          //ADD CODE HERE TO DO THINGS...
+          
+        }, intervalLength);
+
+      }
+    </script>
+
+  </head>
+
+  <!-- start the body of your page -->
+  <body style='margin : 0px; overflow: hidden;'>
+    <!-- add some info at the top of the page -->
+    <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1; color: white;'>
+      Instructions:<br/>
+      Point your camera at the target marker.
+    </div>    
+
+    <!-- Define your 3d scene and enabled ar.js -->
+    <a-scene debug embedded arjs='trackingMethod: best; debugUIEnabled: false;'>
+
+      <!-- Declare assets for use in the scene. -->
+      <a-assets timeout="1000">
+        <!-- Declare assets here. These are things like images or 3D models. -->    
+        
+        <!-- Example of how to declare a 3D model asset. -->
+        <!--<a-asset-item id="3DModel-obj" src="3Dmodel.obj"></a-asset-item preload="auto">-->
+        <!-- Example of how to declare a skin for a 3D model asset. -->
+        <!--<a-asset-item id="3DModel-mtl" src="3DModel.mtl"></a-asset-item>-->
+      
+      </a-assets>
+
+      <!-- Create a anchor to attach your augmented reality -->
+      <a-anchor hit-testing-enabled='true'>
+
+        <!-- Add your augmented reality items here -->
+
+        <!-- example of basic text in 3D -->
+        <!-- see: https://github.com/aframevr/aframe/blob/master/docs/components/text.md -->
+        <!--<a-entity id="basicText" position='0 0 0' scale='1 1 1' color='red' text='value: Hello World;'></a-entity>-->
+
+        <!-- example of a basic plane. -->
+        <!-- see: https://aframe.io/docs/0.8.0 -->
+        <!--<a-plane color="blue" height="1" width="1" rotation="-90 0 0"></a-plane>-->
+
+        <!-- example of text fit onto a plane -->
+        <!--
+        <a-plane
+        id = "helloWorldPlane"
+        geometry="primitive: plane; width: 1; height: 1; height: auto"
+        material="opacity: 0.5; color: white;"
+        position='0 0.25 3'>
+          <a-entity id="planeText" scale='2 2 2' text="value: Hello World;" align-"center"></a-entity>
+        </a-plane>
+        -->
+
+        <!-- Basic Box -->             
+        <!-- see: https://aframe.io/docs/0.8.0 -->
+        <a-box id="myBox" rotation="0 0 0" position='0 0.5 0' depth="1" height="1" width="1" material='opacity: 0.5; side:double; color:blue;'></a-box>
+        
+        <!-- Basic Sphere --> 
+        <!-- see: https://aframe.io/docs/0.8.0/primitives/a-sphere.html -->
+        <!--<a-sphere id="mySphere" position='0 0 0' color="yellow" radius="0.05"></a-sphere>-->
+
+        <!-- 3D Model example -->
+        <!-- see: https://aframe.io/docs/0.8.0/primitives/a-obj-model.html -->
+        <!--<a-obj-model id="my3DModel" src="#3DModel-obj" position="0 0 0" rotation="0 0 0" scale=".1 .1 .1" material="opacity: 0.9; side:double; color: orange;"></a-obj-model>-->
+        <!-- 3D Model example with skin -->
+        <!--<a-obj-model id="my3DModel" src="#3DModel-obj" mtl="#3DModel-mtl" position="0 0 0" rotation="0 0 0" scale="1 1 1" material="opacity: 1.0; side:double;"></a-obj-model>-->
+        
+      </a-anchor>
+
+      <!-- Define a static camera -->
+      <a-camera-static/>
+
+    </a-scene>
+
+    <!-- add some info at the bottom left of the page -->
+    <div >
+      <span id="myText" style='z-index: 1; color: white; position: fixed; left: 50px; bottom: 10px;'>Add some text here.</span>
+    </div>   
+
+  </body>
+
 </html>
