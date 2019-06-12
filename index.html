@@ -1,60 +1,101 @@
 <!DOCTYPE html>
-<html>
-	<head>
-
-    <!--
-    AR.js workshop
-    Author: Matt Nutsch
-    Date: 6-20-2018
-    Description: This is sample code for a workshop on developing an AR.js app.
-    Notes:
-    This code is based in part on Jerome Etienne's examples of AR.js at: https://github.com/jeromeetienne/AR.js/tree/master/aframe
-    It is also based in part on the AFrame documentation, available at: https://aframe.io/docs
-
-    Go to this URL to run this code in a mobile web browser: https://mnutsch.github.io/arjs_workshop/start/index.html
-    Download and print this image for the AR target marker: https://github.com/mnutsch/mnutsch.github.io/raw/master/arjs_workshop/start/Hiro%20pattern%20with%20border.pdf
-    -->
-
-    <!-- include a-frame -->
-    <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
-
-    <!-- include ar.js for aframe -->
-    <script src='https://mnutsch.github.io/arjs_workshop/start/vendor/arjs/build/aframe-ar.js'></script>
-    <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
-    <!-- Note: the above libraries are included with absolute URL's, because Github.io seems to prefer those. Change them to relative URL's -->
-
-    <script>
-      //wait until the page loads to perform the following
-      window.onload = function ()
-      {
-
-        var intervalLength = 20; //determines the speed of the animation (milliseconds to wait between ticks)
-
-        //define the scene, for ease of interacting with it
-        var scene = document.querySelector('a-scene');
-
-        //ADD JAVASCRIPT CODE HERE...
-
-        //Timer for animations
-        setInterval(function()
-        {
-
-          //ADD CODE HERE TO DO THINGS...
-
-        }, intervalLength);
-
-      }
-    </script>
-
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="css/main.css" />
+    <title>Finder</title>
   </head>
+  <body class="is-preload">
+    <!-- Content wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+			<header id="header">
+				<div class="logo">
+					<span class="icon"><img src="images/logo.png" alt="Logo"></span>
+				</div>
+				<div class="content">
+					<div class="inner">
+						<h1>Room Finder</h1>
+						<p>AR powered Room finder</p>
+					</div>
+          <div class="field half">
+            <form role=search  onsubmit="saveSearch();" action="navigation.html" method="get">
+              <input type="text" name="search" id="input_search" value="" placeholder="Room ID" />
+            </form>
+  				</div><br>
+				</div>
 
-  <body style='margin : 0px; overflow: hidden;'>
-  <a-scene embedded arjs>
-    <!-- create your content here. just a box for now -->
-    <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
-    <!-- define a camera which will move according to the marker position -->
-    <a-marker-camera preset='hiro'></a-marker-camera>
-  </a-scene>
-</body>
+				<nav>
+					<ul>
+						<li><a href="#intro">Intro</a></li>
+            <li><a href="navigation.html">Navigate</a></li>
+						<li><a href="#contact">Contact</a></li>
+					</ul>
+				</nav>
+			</header>
 
+      <!-- Main -->
+      <div id="main">
+        <!-- Intro -->
+				<article id="intro">
+					<h2 class="major">Introduction</h2>
+					<span class="image main"><img src="images/intro.jpg" alt="" /></span>
+					<p>Leverage AR technology to find the room you are looking for.</p>
+					<p>Using a set of web frameworks for camera scanning and 3D rendering, we developed a browser based app to ease the hassle of finding
+            your way through the Hospital buildings.</p>
+          <p>Click on <a href="navigation.html">Navigate</a> to access the camera and point to a QR Code around you. Then your only task is to
+          follow the arrow to your destination.</p>
+				</article>
+
+			<!-- Contact -->
+				<article id="contact">
+					<h2 class="major">Contact</h2>
+					<form method="post" action="#">
+						<div class="fields">
+							<div class="field half">
+								<label for="name">Name</label>
+								<input type="text" name="name" id="name" />
+							</div>
+							<div class="field half">
+								<label for="email">Email</label>
+								<input type="text" name="email" id="email" />
+							</div>
+							<div class="field">
+								<label for="message">Message</label>
+								<textarea name="message" id="message" rows="4"></textarea>
+							</div>
+						</div>
+						<ul class="actions">
+							<li><input type="submit" value="Send Message" class="primary" /></li>
+							<li><input type="reset" value="Reset" /></li>
+						</ul>
+					</form>
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+					</ul>
+				</article>
+
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <p class="copyright">&copy; Eduardo Flores.</p>
+      </footer>
+    </div>
+
+    <!-- BG -->
+		<div id="bg"></div>
+
+    <!-- Scripts -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/browser.min.js"></script>
+		<script src="js/breakpoints.min.js"></script>
+		<script src="js/util.js"></script>
+		<script src="js/main.js"></script>
+    <script src="js/script.js"></script>
+  </body>
 </html>
