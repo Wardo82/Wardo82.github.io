@@ -36,7 +36,7 @@
               <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
             </transparent>
             <transparency>
-              <float sid="transparency">0.900000</float>
+              <float sid="transparency">0.200000</float>
             </transparency>
           </phong>
         </technique>
