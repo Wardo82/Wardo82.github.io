@@ -18,12 +18,12 @@
     <!-- AR Scene -->
     <a-scene embedded arjs>
       <a-assets>
-        <a-asset-item id="arrow-obj" src="assets/models/arrow.obj"></a-asset-item>
+        <a-asset-item id="arrow-obj" src="assets/models/arrow.dae"></a-asset-item>
       </a-assets>
 
       <!-- handle marker with hiro preset -->
       <a-marker preset='hiro'>
-        <a-entity position="0 2 0" scale="2 2 2" rotation="180 0 0" obj-model="#arrow-obj" material="color: white"></a-entity>
+        <a-entity position="0 2 0" scale="2 2 2" rotation="180 0 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
       <!-- add a simple camera -->
