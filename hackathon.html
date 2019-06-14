@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Multimedia Systems tests</title>
+    <!-- include a-frame -->
+    <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
+
+    <!-- include ar.js for aframe -->
+    <script src='https://mnutsch.github.io/arjs_workshop/start/vendor/arjs/build/aframe-ar.js'></script>
+    <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
+    <!-- Note: the above libraries are included with absolute URL's, because Github.io seems to prefer those. Change them to relative URL's -->
+  </head>
+  <body>
+
+    <a-scene embedded arjs>
+      <!-- Object declaration -->
+      <a-assets>
+        <a-asset-item id="arrow-obj" src="assets/arrow.dae"></a-asset-item>
+      </a-assets>
+
+      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-circle.patt">
+        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      </a-marker>
+
+      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-square.patt">
+        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      </a-marker>
+
+      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-triangle.patt">
+        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      </a-marker>
+
+      <!-- add a simple camera -->
+      <a-entity camera></a-entity>
+
+    </a-scene>
+
+    <script type="text/javascript" src="js/Vertex.js"></script>
+    <script type="text/javascript" src="js/PriorityQueue.js"></script>
+    <script type="text/javascript" src="js/Graph.js"></script>
+    <script type="text/javascript">
+      // -------------------------------------------------------
+      // ---------------------- Main ---------------------------
+      // -------------------------------------------------------
+      var line = new Vertex(1);
+      var cross = new Vertex(2);
+      cross.setQRCode("pattern-x.patt");
+      var circle = new Vertex(3);
+      circle.setQRCode("pattern-circle.patt");
+      var triangle = new Vertex(4);
+      triangle.setQRCode("pattern-triangle.patt");
+      var square = new Vertex(5);
+      square.setQRCode("pattern-square.patt");
+
+
+      // Instance of graph
+      var graph = new UndirectedGraph();
+      // Node addition
+      graph.addVertex(line);
+      graph.addVertex(cross);
+      graph.addVertex(circle);
+      graph.addVertex(triangle);
+      graph.addVertex(square);
+
+      // Edges addition
+      cross.setDistance(circle, 11);
+      graph.addEdge(cross, circle);
+
+      cross.setDistance(triangle, 3);
+      graph.addEdge(cross, triangle);
+
+      cross.setDistance(square, 2);
+      graph.addEdge(cross, square);
+
+      circle.setDistance(triangle, 4);
+      graph.addEdge(circle, triangle);
+
+      circle.setDistance(line, 1);
+      graph.addEdge(circle, line);
+
+      console.log(graph.edges);
+
+
+      var dijkstra = graph.Dijkstra(square, undefined);
+      console.log(dijkstra.distances);
+      console.log(dijkstra.path);
+
+      // var array = [2,10,3,1,5,6,4];
+      // var obj = new PriorityQueue(array);
+      // console.log(obj.heapList);
+      // obj.insert(1);
+      // console.log(obj.heapList);
+    </script>
+  </body>
+</html>
