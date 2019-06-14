@@ -31,6 +31,10 @@
         <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
+      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-x.patt">
+        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      </a-marker>
+
       <!-- add a simple camera -->
       <a-entity camera></a-entity>
 
@@ -40,24 +44,27 @@
     <script type="text/javascript" src="js/PriorityQueue.js"></script>
     <script type="text/javascript" src="js/Graph.js"></script>
     <script type="text/javascript">
+      var id = undefined;
+      window.onload = function(){
+        id = localStorage.getItem('input_search');
+        document.getElementById("roomID").innerHTML = id;
+      }
       // -------------------------------------------------------
       // ---------------------- Main ---------------------------
       // -------------------------------------------------------
-      var line = new Vertex(1);
-      var cross = new Vertex(2);
+      var cross = new Vertex(1);
       cross.setQRCode("pattern-x.patt");
-      var circle = new Vertex(3);
+      var circle = new Vertex(2);
       circle.setQRCode("pattern-circle.patt");
-      var triangle = new Vertex(4);
+      var triangle = new Vertex(3);
       triangle.setQRCode("pattern-triangle.patt");
-      var square = new Vertex(5);
+      var square = new Vertex(4);
       square.setQRCode("pattern-square.patt");
 
 
       // Instance of graph
       var graph = new UndirectedGraph();
       // Node addition
-      graph.addVertex(line);
       graph.addVertex(cross);
       graph.addVertex(circle);
       graph.addVertex(triangle);
@@ -76,21 +83,27 @@
       circle.setDistance(triangle, 4);
       graph.addEdge(circle, triangle);
 
-      circle.setDistance(line, 1);
-      graph.addEdge(circle, line);
-
       console.log(graph.edges);
 
-
-      var dijkstra = graph.Dijkstra(square, undefined);
+      // Chosing the proper destination
+      var destination = undefined;
+      switch (id) {
+        case 'triangle':
+          destination = triangle;
+          break;
+        case 'circle':
+          destination = circle;
+          break;
+        case 'square':
+          destination = square;
+          break;
+        default:
+          destination = cross;
+      }
+      var dijkstra = graph.Dijkstra(square, destination);
       console.log(dijkstra.distances);
       console.log(dijkstra.path);
 
-      // var array = [2,10,3,1,5,6,4];
-      // var obj = new PriorityQueue(array);
-      // console.log(obj.heapList);
-      // obj.insert(1);
-      // console.log(obj.heapList);
     </script>
   </body>
 </html>
