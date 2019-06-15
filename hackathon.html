@@ -56,11 +56,11 @@
 
       <!-- Text demo-->
       <a-marker type="pattern" url="assets/pattern-x.patt">
-        <!-- <a-text value="Name:" position="1 0 2" rotation="-90 0 0"> </a-text>
-        <a-text value="Mr. Applebaum" position="1 0 2.5" rotation="-90 0 0"> </a-text> -->
-        <a-text value="NPO" position="1 0 1.5" rotation="-90 0 0"> </a-text>
-        <a-text value="Latex alergy" position="1 0 2" rotation="-90 0 0"> </a-text>
-        <a-text value="Gluten intolerant" position="1 0 2.5" rotation="-90 0 0"> </a-text>
+        <!-- <a-text value="Name:" position="1 0 2" rotation="270 0 0"> </a-text>
+        <a-text value="Mr. Applebaum" position="1 0 2.5" rotation="270 0 0"> </a-text> -->
+        <a-text value="NPO" position="1 0 1.5" rotation="270 0 0"> </a-text>
+        <a-text value="Latex alergy" position="1 0 2" rotation="270 0 0"> </a-text>
+        <a-text value="Gluten intolerant" position="1 0 2.5" rotation="270 0 0"> </a-text>
       </a-marker>
 
       <!-- Building floor -->
@@ -95,6 +95,10 @@
     </a-scene>
 
     <!-- Main -->
+    <div class="field half" style="padding-top: 0px;">
+    <form role=search  onsubmit="saveSearch();" action="hackathon.html" method="get">
+      <input type="text" name="search" id="input_search" value="" placeholder="Room ID" />
+    </form>
     <!-- <div class="card">
       <p>The room you are looking for is: </p><p id="roomID"></p>
     </div> -->
