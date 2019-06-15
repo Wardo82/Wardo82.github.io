@@ -5,7 +5,7 @@
     <title>Multimedia Systems tests</title>
 
     <link rel="stylesheet" href="css/main.css" />
-    
+
     <!-- include a-frame -->
     <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
 
@@ -25,7 +25,7 @@
   <body>
 
 
-    <a-scene embedded arjs hello-world>
+    <a-scene embedded arjs>
       <!-- Object declaration -->
       <a-assets>
         <a-asset-item id="arrow-obj" src="assets/arrow.dae"></a-asset-item>
@@ -45,7 +45,7 @@
       </a-marker>
 
       <a-marker type="pattern" url="assets/pattern-x.patt">
-        <a-entity id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+        <a-entity hello-world id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
       <!-- add a simple camera -->
