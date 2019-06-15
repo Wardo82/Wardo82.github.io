@@ -1667,3 +1667,8 @@ input, select, textarea {
 	margin: 0 12%;
 	opacity: 1;
 }
+
+#search_bar{
+	position: absolute;
+	padding-top: 0px;
+}
