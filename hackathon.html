@@ -55,13 +55,13 @@
       </a-marker>
 
       <!-- Text demo-->
-      <a-marker type="pattern" url="assets/pattern-x.patt">
-        <!-- <a-text value="Name:" position="1 0 2" rotation="270 0 0"> </a-text>
-        <a-text value="Mr. Applebaum" position="1 0 2.5" rotation="270 0 0"> </a-text> -->
-        <!-- <a-text value="NPO" position="0 0 1.5" rotation="270 0 0"> </a-text>
+      <!-- <a-marker type="pattern" url="assets/pattern-x.patt">
+        <a-text value="Name:" position="1 0 2" rotation="270 0 0"> </a-text>
+        <a-text value="Mr. Applebaum" position="1 0 2.5" rotation="270 0 0"> </a-text>
+        <a-text value="NPO" position="0 0 1.5" rotation="270 0 0"> </a-text>
         <a-text value="Latex alergy" position="0 0 2" rotation="270 0 0"> </a-text>
-        <a-text value="Gluten intolerant" position="0 0 2.5" rotation="270 0 0"> </a-text> -->
-      </a-marker>
+        <a-text value="Gluten intolerant" position="0 0 2.5" rotation="270 0 0"> </a-text>
+      </a-marker> -->
 
       <!-- Building floor -->
       <!-- <a-marker type="pattern" url="assets/pattern-x.patt">
@@ -110,10 +110,10 @@
     <script type="text/javascript">
       var id = undefined;
 
-      window.onload = function(){
-        id = localStorage.getItem('input_search');
-        document.getElementById("roomID").innerHTML = id;
-      }
+      // window.onload = function(){
+      //   id = localStorage.getItem('input_search');
+      //   document.getElementById("roomID").innerHTML = id;
+      // }
       // -------------------------------------------------------
       // ---------------------- Main ---------------------------
       // -------------------------------------------------------
@@ -190,16 +190,16 @@
       //document.getElementById()
       //grab the context from your destination canvas
 
-      if (destination == cross) {
-        var aux = document.getElementById("pattern-square");
-        aux.setAttribute("rotation","90 135 0");
-        var aux = document.getElementById("pattern-triangle");
-        aux.setAttribute("rotation","90 270 0");
-        var aux = document.getElementById("pattern-circle");
-        aux.setAttribute("rotation","90 315 0");
-        var aux = document.getElementById("pattern-x");
-        aux.setAttribute("rotation","180 180 0");
-      }
+      // if (destination == cross) {
+      //   var aux = document.getElementById("pattern-square");
+      //   aux.setAttribute("rotation","90 135 0");
+      //   var aux = document.getElementById("pattern-triangle");
+      //   aux.setAttribute("rotation","90 270 0");
+      //   var aux = document.getElementById("pattern-circle");
+      //   aux.setAttribute("rotation","90 315 0");
+      //   var aux = document.getElementById("pattern-x");
+      //   aux.setAttribute("rotation","180 180 0");
+      // }
 
 
 
