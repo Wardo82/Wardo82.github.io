@@ -14,12 +14,26 @@
     <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
     <!-- Note: the above libraries are included with absolute URL's, because Github.io seems to prefer those. Change them to relative URL's -->
     <script type="text/javascript">
+      AFRAME.registerComponent('clickable',{
+        init:function(){
+          var view = document.getElementById("float");
+          this.el.addEventListener('click',function(){
+            var htmlString =
+              "<div class=\"card\">
+                <p>The room you are looking for is: </p><p id=\"roomID\"></p>
+              </div>";
+            var div = document.createElement('div');
+
+            div.innerHTML = htmlString.trim();
+           });
+        }
+      });
       AFRAME.registerComponent('hello-world', {
           init: function () {
             console.log('Hello, World!');
             console.log(this);
           }
-          });
+      });
     </script>
   </head>
   <body>
@@ -45,7 +59,7 @@
       </a-marker>
 
       <a-marker type="pattern" url="assets/pattern-x.patt">
-        <a-entity hello-world id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+        <a-entity clickable hello-world id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
       <!-- add a simple camera -->
@@ -54,9 +68,7 @@
     </a-scene>
 
     <!-- Main -->
-    <div class="card">
-      <p>The room you are looking for is: </p><p id="roomID"></p>
-    </div>
+
 
     <script type="text/javascript" src="js/Vertex.js"></script>
     <script type="text/javascript" src="js/PriorityQueue.js"></script>
