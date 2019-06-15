@@ -24,13 +24,13 @@
             div.innerHTML = htmlString.trim();
 
             document.body.append(div);
+            console.log(this.el);
            });
         }
       });
       AFRAME.registerComponent('hello-world', {
           init: function () {
             console.log('Hello, World!');
-            console.log(this);
           }
       });
     </script>
@@ -42,10 +42,35 @@
       <!-- Object declaration -->
       <a-assets>
         <a-asset-item id="arrow-obj" src="assets/arrow.dae"></a-asset-item>
+
+        <a-asset-item id="floorplan-obj" src="assets/floorplan.dae"></a-asset-item>
+
+
       </a-assets>
 
       <!-- Markers -->
-      <a-marker type="pattern" url="assets/pattern-circle.patt">
+      <!-- Onboarding demo-->
+      <!-- <a-marker type="pattern" url="assets/pattern-x.patt">
+        <a-entity id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 270 0" collada-model="#arrow-obj"></a-entity>
+      </a-marker> -->
+
+      <!-- Text demo-->
+      <!-- <a-marker type="pattern" url="assets/pattern-x.patt">
+        <a-text value="NPO"> </a-text>
+        <a-text value="Latex Alergy"> </a-text>
+      </a-marker> -->
+
+      <!-- Building floor -->
+      <a-marker type="pattern" url="assets/pattern-x.patt">
+        <a-entity id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#floorplan-obj"></a-entity>
+      </a-marker>
+
+
+
+
+
+      <!-- Markers -->
+      <!-- <a-marker type="pattern" url="assets/pattern-circle.patt">
         <a-entity id="pattern-circle" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
@@ -59,7 +84,7 @@
 
       <a-marker type="pattern" url="assets/pattern-x.patt">
         <a-entity clickable hello-world id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
-      </a-marker>
+      </a-marker> -->
 
       <!-- add a simple camera -->
       <a-entity camera></a-entity>
@@ -76,8 +101,6 @@
     <script type="text/javascript" src="js/Graph.js"></script>
     <script type="text/javascript">
       var id = undefined;
-
-      var destinationCanvas = document.getElementById("destinationCanvas");
 
       window.onload = function(){
         id = localStorage.getItem('input_search');
