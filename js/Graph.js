@@ -107,9 +107,13 @@ UndirectedGraph.prototype.Dijkstra = function (source, destination) {
       }
     }
 
-    console.log(path);
+    //console.log(path);
   }
 
   return {distances: dist,
           path: path};
+};
+
+UndirectedGraph.prototype.getLength = function () {
+  return this.nodes.length;
 };

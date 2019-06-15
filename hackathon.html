@@ -10,47 +10,67 @@
     <script src='https://mnutsch.github.io/arjs_workshop/start/vendor/arjs/build/aframe-ar.js'></script>
     <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
     <!-- Note: the above libraries are included with absolute URL's, because Github.io seems to prefer those. Change them to relative URL's -->
+    <script type="text/javascript">
+      AFRAME.registerComponent('hello-world', {
+          init: function () {
+            console.log('Hello, World!');
+            console.log(this);
+          }
+          });
+    </script>
   </head>
   <body>
 
-    <a-scene embedded arjs>
+
+    <a-scene embedded arjs hello-world>
       <!-- Object declaration -->
       <a-assets>
         <a-asset-item id="arrow-obj" src="assets/arrow.dae"></a-asset-item>
       </a-assets>
 
-      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-circle.patt">
-        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      <!-- Markers -->
+      <a-marker type="pattern" url="assets/pattern-circle.patt">
+        <a-entity  id="pattern-circle" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
-      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-square.patt">
-        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      <a-marker type="pattern" url="assets/pattern-square.patt">
+        <a-entity id="pattern-square" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
-      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-triangle.patt">
-        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      <a-marker type="pattern" url="assets/pattern-triangle.patt">
+        <a-entity id="pattern-triangle" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
-      <a-marker id="arrow-marker" type="pattern" url="assets/pattern-x.patt">
-        <a-entity position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+      <a-marker type="pattern" url="assets/pattern-x.patt">
+        <a-entity id="pattern-x" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
       <!-- add a simple camera -->
       <a-entity camera></a-entity>
 
-      <!-- Main -->
-      <div class="card">
-        <p>The room you are looking for is: </p><p id="roomID"></p>
-      </div>
-      
     </a-scene>
+
+    <!-- Main -->
+    <canvas id="destinationCanvas" width="300" height="300"></canvas>
+    <div class="card">
+      <p>The room you are looking for is: </p><p id="roomID"></p>
+    </div>
 
     <script type="text/javascript" src="js/Vertex.js"></script>
     <script type="text/javascript" src="js/PriorityQueue.js"></script>
     <script type="text/javascript" src="js/Graph.js"></script>
     <script type="text/javascript">
+      // sleep time expects milliseconds
+      function sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+      }
+
       var id = undefined;
+
+      var destinationCanvas = document.getElementById("destinationCanvas");
+
       window.onload = function(){
+
         id = localStorage.getItem('input_search');
         document.getElementById("roomID").innerHTML = id;
       }
@@ -77,18 +97,18 @@
 
       // Edges addition
       cross.setDistance(circle, 11);
-      graph.addEdge(cross, circle);
+      graph.addEdge(cross, circle, 315);
 
-      cross.setDistance(triangle, 3);
-      graph.addEdge(cross, triangle);
+      cross.setDistance(circle, 3);
+      graph.addEdge(circle, triangle, 90);
 
       cross.setDistance(square, 2);
-      graph.addEdge(cross, square);
+      graph.addEdge(cross, square, 135);
 
-      circle.setDistance(triangle, 4);
-      graph.addEdge(circle, triangle);
+      circle.setDistance(square, 4);
+      graph.addEdge(square, triangle, 0);
 
-      console.log(graph.edges);
+      //console.log(graph.edges);
 
       // Chosing the proper destination
       var destination = undefined;
@@ -105,9 +125,36 @@
         default:
           destination = cross;
       }
-      var dijkstra = graph.Dijkstra(square, destination);
-      console.log(dijkstra.distances);
-      console.log(dijkstra.path);
+
+      // Compute path from all vertices
+      // TODO: Do it in a for loop. nodes.length is not working
+      // var dijkstras = [0];
+      // console.log(graph.getLength());
+      // for (var i = 1; i < graph.nodes.length+1; i++) {
+      //   var dijkstra = graph.Dijkstra(graph.nodes[i], destination);
+      //   dijkstras[i] = dijkstra;
+      // }
+      var dijkstras = [];
+      var dijkstraFromSquare = graph.Dijkstra(square, destination);
+      var dijkstraFromCross = graph.Dijkstra(cross, destination);
+      var dijkstraFromTriangle = graph.Dijkstra(triangle, destination);
+      var dijkstraFromCircle = graph.Dijkstra(circle, destination);
+
+      var squarePath = dijkstraFromSquare.path;
+      console.log(squarePath);
+
+      // Once we have the path we can point the arrow marker to the next marker
+      // TODO: What you left was the pointing of the arrows.
+      // For that you need a source, and you get that with a QRCode. Think of using the
+      // QRCode to send you to the same web page but with ?source=id on the URL
+      //document.getElementById()
+      //grab the context from your destination canvas
+
+      if (destination == cross) {
+        document.getElementById("pattern-square").setAttribute("rotation","315 180 0");
+      }
+
+
 
     </script>
   </body>
