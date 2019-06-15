@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Multimedia Systems tests</title>
+
+    <link rel="stylesheet" href="css/main.css" />
+    
     <!-- include a-frame -->
     <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
 
@@ -34,8 +37,7 @@
       </a-marker>
 
       <a-marker type="pattern" url="assets/pattern-square.patt">
-        <a-text value="Hello, World!"></a-text>
-        <!--<a-entity id="pattern-square" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>-->
+        <a-entity id="pattern-square" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
       </a-marker>
 
       <a-marker type="pattern" url="assets/pattern-triangle.patt">
@@ -52,7 +54,6 @@
     </a-scene>
 
     <!-- Main -->
-    <canvas id="destinationCanvas" width="300" height="300"></canvas>
     <div class="card">
       <p>The room you are looking for is: </p><p id="roomID"></p>
     </div>
@@ -61,11 +62,6 @@
     <script type="text/javascript" src="js/PriorityQueue.js"></script>
     <script type="text/javascript" src="js/Graph.js"></script>
     <script type="text/javascript">
-      // sleep time expects milliseconds
-      function sleep (time) {
-        return new Promise((resolve) => setTimeout(resolve, time));
-      }
-
       var id = undefined;
 
       var destinationCanvas = document.getElementById("destinationCanvas");
@@ -153,11 +149,13 @@
 
       if (destination == cross) {
         var aux = document.getElementById("pattern-square");
-        aux.setAttribute("rotation","90 315 0");
+        aux.setAttribute("rotation","90 135 0");
         var aux = document.getElementById("pattern-triangle");
-        aux.setAttribute("rotation","90 315 0");
+        aux.setAttribute("rotation","90 270 0");
         var aux = document.getElementById("pattern-circle");
         aux.setAttribute("rotation","90 315 0");
+        var aux = document.getElementById("pattern-circle");
+        aux.setAttribute("rotation","180 180 0");
       }
 
 
