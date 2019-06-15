@@ -34,7 +34,8 @@
       </a-marker>
 
       <a-marker type="pattern" url="assets/pattern-square.patt">
-        <a-entity id="pattern-square" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>
+        <a-text value="Hello, World!"></a-text>
+        <!--<a-entity id="pattern-square" position="0 1.5 0" scale="2 2 2" rotation="90 180 0" collada-model="#arrow-obj"></a-entity>-->
       </a-marker>
 
       <a-marker type="pattern" url="assets/pattern-triangle.patt">
@@ -152,7 +153,11 @@
 
       if (destination == cross) {
         var aux = document.getElementById("pattern-square");
-        aux.setAttribute("rotation","315 180 0");
+        aux.setAttribute("rotation","90 315 0");
+        var aux = document.getElementById("pattern-triangle");
+        aux.setAttribute("rotation","90 315 0");
+        var aux = document.getElementById("pattern-circle");
+        aux.setAttribute("rotation","90 315 0");
       }
 
 
