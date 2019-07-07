@@ -10,6 +10,25 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1f55d4854fcdb64aad300aac04e6dd64693a48ad/dist/aframe-master.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.1/aframe/build/aframe-ar.js"></script>
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script type="text/javascript">
+    AFRAME.registerComponent('rotation-reader', {
+      tick: function () {
+          var rotCamera=this.el.object3D.rotation;
+          objectEntity.object3D.rotation.set(
+                -rotCamera['x'],
+                -rotCamera['y'],
+                -rotCamera['z']
+                );
+          var x = document.getElementById('x');
+          x.innerHTML = rotCamera['x'];
+          var y = document.getElementById('y');
+          y.innerHTML = rotCamera['y'];
+          var z = document.getElementById('z');
+          z.innerHTML = rotCamera['z'];
+
+      }
+    });
+    </script>
   </head>
   <body>
 
@@ -30,10 +49,14 @@
       </a-marker>
 
       <!-- add a simple camera -->
-      <a-entity camera></a-entity>
+      <a-entity camera rotation-reader></a-entity>
 
     </a-s cene>
 
+    <p id="x"></p>
+    <p id="y"></p>
+    <p id="z"></p>
+    
     <script type="text/javascript" src="js/Vertex.js"></script>
     <script type="text/javascript" src="js/PriorityQueue.js"></script>
     <script type="text/javascript" src="js/Graph.js"></script>
