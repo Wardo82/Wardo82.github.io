@@ -14,11 +14,7 @@
     AFRAME.registerComponent('rotation-reader', {
       tick: function () {
           var rotCamera=this.el.object3D.rotation;
-          objectEntity.object3D.rotation.set(
-                -rotCamera['x'],
-                -rotCamera['y'],
-                -rotCamera['z']
-                );
+          
           var x = document.getElementById('x');
           x.innerHTML = rotCamera['x'];
           var y = document.getElementById('y');
@@ -51,9 +47,11 @@
 
     </a-scene>
 
-    <p id="x"></p>
-    <p id="y"></p>
-    <p id="z"></p>
+    <div class="coordinates">
+      <p id="x"></p>
+      <p id="y"></p>
+      <p id="z"></p>
+    </div>
 
     <script type="text/javascript" src="js/Vertex.js"></script>
     <script type="text/javascript" src="js/PriorityQueue.js"></script>
