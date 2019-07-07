@@ -1644,3 +1644,11 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+
+		.coordinates {
+		    position: absolute;
+		    z-index: 10;
+		    margin: 0px;
+		    top: 0px;
+		    overflow: visible;
+		}
