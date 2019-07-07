@@ -47,11 +47,11 @@
                   -rotCamera['y'],
                   -rotCamera['z']
                   );
-            let x = getElementById('x');
+            var x = getElementById('x');
             x.innerHTML = rotCamera['x'];
-            let y = getElementById('y');
+            var y = getElementById('y');
             y.innerHTML = rotCamera['y'];
-            let z = getElementById('z');
+            var z = getElementById('z');
             z.innerHTML = rotCamera['z'];
 
         }
@@ -65,31 +65,29 @@
 
 <body style='margin : 0px; overflow: hidden;'>
 
-<a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
-    <a-assets>
-        <a-asset-item id="arrow" src="http://home.in.tum.de/~gruberfe/mms/assets/arrow.gltf"></a-asset-item>
-    </a-assets>
+  <a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
+      <a-assets>
+          <a-asset-item id="arrow" src="http://home.in.tum.de/~gruberfe/mms/assets/arrow.gltf"></a-asset-item>
+      </a-assets>
 
-    <a-entity camera="active: true" look-controls rotation-reader data-aframe-default-camera>
-            <a-entity id="arrowObject" gltf-model="#arrow" position="0 0 -0.6" rotation="90 0 90" scale="0.05 0.05 0.05" visible="true"></a-entity>
-    </a-entity>
-</a-scene>
+      <a-entity camera="active: true" look-controls rotation-reader data-aframe-default-camera>
+              <a-entity id="arrowObject" gltf-model="#arrow" position="0 0 -0.6" rotation="90 0 90" scale="0.05 0.05 0.05" visible="true"></a-entity>
+      </a-entity>
+  </a-scene>
 
-<div class="qr-data-info">
-  QR Data : <span id="qrData"></span> <br>
-</div>
+  <div class="qr-data-info">
+    QR Data : <span id="qrData"></span> <br>
+  </div>
 
-<div class="tool-bar">
-  <a href="#" class="btn-clear">Clear</a>
-</div>
+  <div class="tool-bar">
+    <p id="x"></p>
+    <p id="y"></p>
+    <p id="z"></p>
+    <a href="#" class="btn-clear">Clear</a>
+  </div>
 
-<div class="coordinates">
-  <p id="x"></p>
-  <p id="y"></p>
-  <p id="z"></p>
-</div>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   try {
     //Get Object Element: Arrow or Pin
     objectEntity = document.getElementById('arrowObject');
@@ -200,7 +198,7 @@
   } catch (error) {
     alert(error.message)
   }
-</script> -->
+</script>
 
 </body>
 </html>
