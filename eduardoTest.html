@@ -47,9 +47,13 @@
                   -rotCamera['y'],
                   -rotCamera['z']
                   );
-            console.log("x: "+rotCamera['x']);
-            console.log("y: "+rotCamera['y']);
-            console.log("z: "+rotCamera['z']);
+            let x = getElementById('x');
+            x.innerHTML = rotCamera['x'];
+            let y = getElementById('y');
+            y.innerHTML = rotCamera['y'];
+            let z = getElementById('z');
+            z.innerHTML = rotCamera['z'];
+
         }
     });
     } catch (error) {
@@ -77,6 +81,12 @@
 
 <div class="tool-bar">
   <a href="#" class="btn-clear">Clear</a>
+</div>
+
+<div class="coordinates">
+  <p id="x"></p>
+  <p id="y"></p>
+  <p id="z"></p>
 </div>
 
 <!-- <script type="text/javascript">
