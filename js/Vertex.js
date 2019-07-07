@@ -8,6 +8,12 @@ function Vertex(id) {
   this.coordinates = {'x':0, 'y':0, 'z':0}; // May be used in future implementations
 }
 
+// Returns degree from this Node to Destination Node
+// @param dest: Destination Node
+Vertex.prototype.getDegree = function (dest) {
+  return this.neighbors[dest]['degree'];
+}
+
 // ===== Method declaration =====
 Vertex.prototype.addNeighbor = function (neighbor, degree) {
   // Adds a neighbor to the node.

@@ -94,6 +94,8 @@ UndirectedGraph.prototype.Dijkstra = function (source, destination) {
   while (!pq.isEmpty()) {
     var v = pq.delMin(); // Extract minimum distance vertex from pq.
 
+    if (this.nodes[v] == destination) return {distances: dist, path: path}; // We have already found our destination
+
     // For every adjacent node of v
     for (var neighbor in this.edges[v]) {
       // Calculate the distance to reach neighbor passing through v
@@ -107,6 +109,7 @@ UndirectedGraph.prototype.Dijkstra = function (source, destination) {
       }
     }
 
+
     //console.log(path);
   }
 
@@ -114,6 +117,27 @@ UndirectedGraph.prototype.Dijkstra = function (source, destination) {
           path: path};
 };
 
-UndirectedGraph.prototype.getLength = function () {
-  return this.nodes.length;
+UndirectedGraph.prototype.getPathBetween = function (vertex1, vertex2) {
+  // getPathBetween: Returns the path between two nodes as an array of Vertex
+  // @param vertex1: Source node
+  // @param vertex2: Destination node
+  dijkstraList = this.Dijkstra(vertex1, vertex2); // Get minimum distance path
+
+  path = [vertex2]; // We start from the destination
+  tmp = vertex2.id;
+  while (tmp != vertex1.id) { // While we have not reached our origin
+    previous = dijkstraList.path[tmp]; // The previous node before reaching tmp
+    path.push(this.nodes[previous]); // Insert it in the path
+    tmp = previous // Jump to previous node until source is reached
+  }
+
+  return path.reverse();
+}
+
+UndirectedGraph.prototype.getDegree = function (idRoot, idDest) {
+  // Returns Degree between Root and Destination Nodes
+  // @param idRoot: ID of Root-Node
+  // @param IdDest: ID of Dest-Node
+
+  return this.nodes[idRoot].getDegree(idDest);
 };

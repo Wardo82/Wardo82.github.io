@@ -1,0 +1,213 @@
+<html>
+<head>
+  <title>Tum Computer Science Room Finder</title>
+  <link rel="shortcut icon" href="about:blank">
+  <!-- Load Frameworks that are needed for AR and QR logic -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+  <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
+  <script src="https://cozmo.github.io/jsQR/jsQR.js"></script>
+  <!-- Load modules for Queues, Vertices, Graph and Hashmaps-->
+  <script type="text/javascript" src="js/Vertex.js"></script>
+  <script type="text/javascript" src="js/PriorityQueue.js"></script>
+  <script type="text/javascript" src="js/Graph.js"></script>
+  <script type="text/javascript" src="js/RoomStore.js"></script>
+  <style type="text/css">
+    .qr-data-info {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      background: rgba(204, 204, 204, 0.3);
+      padding: 5px;
+    }
+
+    .tool-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      background: rgba(204, 204, 204, 0.3);
+      padding: 5px;
+    }
+
+    .tool-bar .btn-clear {
+      font-size: 20px;
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+
+  <script type="text/javascript">
+    // Register
+    try {
+      AFRAME.registerComponent('autoscale', {
+        init: function () {
+          var el = this.el;
+          el.addEventListener('model-loaded', function (e) {
+            box3 = new THREE.Box3().setFromObject(e.detail.model);
+            delta = 1 / (box3.max.x - box3.min.x);
+            scale = 1;
+            if (delta >= 1 && delta <= 2) {
+              scale = THREE.Math.clamp(delta, 3, 4)
+            } else if (delta < 0.09) {
+              scale = THREE.Math.clamp(delta, 0.3, 1);
+            } else if (delta < 1) {
+              scale = THREE.Math.clamp(delta, 4, 5);
+            } else {
+              scale = delta;
+            }
+            console.log('*** delta, scale -- ', delta, scale);
+            el.object3D.scale.set(scale, scale, scale);
+          });
+        }
+      });
+      AFRAME.registerComponent('foundAndLost', {
+		init: function () {
+			var el = this.el;
+		    el.addEventListener('elFound', function() {
+				var elId = el.id;
+				console.log('Marker found: ', elId);
+				// TODO: Add your own code here to react to the marker being found.
+			});
+			marker.addEventListener('elLost', function() {
+				var elId = el.id;
+				console.log('Marker lost: ', elId);
+				// TODO: Add your own code here to react to the marker being lost.
+			});
+		}
+	});
+    } catch (error) {
+      alert(error.message);
+    }
+
+  </script>
+</head>
+
+<body style='margin : 0px; overflow: hidden;'>
+
+<a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
+  <a-entity id="displayObject" scale = "0.2 0.2 0.2" rotation="0 0 90" animation-mixer ></a-entity>
+  <!--<a-marker-camera preset='custom' type='pattern' url='https://prasannaboga.github.io/demo_arjs02/images/pattern-qrcode-square.patt'></a-marker-camera>-->
+  <a-marker-camera preset='hiro' type='pattern'></a-marker-camera>
+</a-scene>
+
+<div class="qr-data-info">
+  QR Data : <span id="qrData"></span> <br>
+</div>
+
+<div class="tool-bar">
+  <a href="#" class="btn-clear">Clear</a>
+</div>
+
+<script type="text/javascript">
+  try {
+    //Get Object Element: Arrow or Pin
+    objectEntity = document.getElementById('displayObject');
+    // Get destination out of local storage
+    var destRoomInput = localStorage.getItem('input_search');
+    //Build Graph
+    // Instance of graph
+    var graph = new UndirectedGraph();
+    var a = new Vertex(1);
+    var b = new Vertex(2);
+    var c = new Vertex(3);
+    var d = new Vertex(4);
+    var e = new Vertex(5);
+    // Node addition
+    graph.addVertex(a);
+    graph.addVertex(b);
+    graph.addVertex(c);
+    graph.addVertex(d);
+    graph.addVertex(e);
+
+    a.setDistance(b,10);
+    b.setDistance(c,10);
+    c.setDistance(d,10);
+    c.setDistance(e,10);
+
+    graph.addEdge(a,b,90);
+    graph.addEdge(b,c,90);
+    graph.addEdge(c,e,180);
+    graph.addEdge(c,d,0);
+
+    console.log(graph.Dijkstra(a,b));
+    console.log(graph.getPathBetween(a, b));
+    
+    //Assign Rooms to Nodes
+    var rooms = new RoomStore();
+    rooms.addFinger("00.01.*",1);
+    rooms.addFinger("00.02.*",2);
+    rooms.addFinger("01.03.*",4);
+    rooms.addRoom("01.04.005",5);
+
+
+    var destRoom=rooms.getRoom("01.04.005");
+    /*
+    *   oldQRCodeValue and nextDestination both hold a number that represents a node of the graph
+    *   Based on these two attributes the system decides if a new path has to be rendered and what model to display on-top of the marker
+    */
+    var oldQRCodeValue = '';
+    var nextDestination = '';
+
+    //Objects that can be displayed
+    objects3D = {
+      'arrow': 'http://home.in.tum.de/~gruberfe/mms/assets/arrow.gltf',
+      'pin': 'http://home.in.tum.de/~gruberfe/mms/assets/CesiumMan.gltf',
+    };
+
+    canvasElement = document.createElement("canvas");
+    canvasContext = canvasElement.getContext("2d");
+
+    //Try to read a QR Code every 500 Milliseconds and change model based on its value
+    setInterval(function () {
+      video = document.querySelector("video");
+      if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvasElement.height = video.videoHeight;
+        canvasElement.width = video.videoWidth;
+        canvasContext.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+        //Reading out QR, Code by using the current frame of the camera produced by aFrame
+        var imageData = canvasContext.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        var qrCode = jsQR(imageData.data, imageData.width, imageData.height);
+        if (qrCode && qrCode.data != '' && qrCode.data != oldQRCodeValue) {
+          //Calculate Shortest Path from current Node
+          shortestPath=graph.Dijkstra(qrCode.data, destRoom).path;
+          //Get Degree
+          //this.graph.getDegree(qrCode.data, shortestPath[0]);
+          alert(qrCode.data);
+          //Load Model Arrow
+          gltfModel = objects3D['arrow'];
+          if (gltfModel) {
+            objectEntity.setAttribute('gltf-model', 'url(' + gltfModel + ')');
+          } else {
+            alert('Cannot find arrow.gltf model! Please check assets folder!');
+          }
+          oldQRCodeValue = qrCode.data;
+          console.log(qrCode.data);
+          $('#qrData').text(qrCode.data);
+        } if (qrCode && qrCode.data != '' && qrCode.data == destRoom) {
+            //Load Model Pin
+            gltfModel = objects3D['pin'];
+            if (gltfModel) {
+                objectEntity.setAttribute('gltf-model', 'url(' + gltfModel + ')');
+            } else {
+                alert('Cannot find pin.gltf model! Please check assets folder!');
+            }
+        } else {
+          console.log('Currently there is no readable QR-Code!');
+        }
+      }
+    }, 300);
+
+    $('.btn-clear').click(function () {
+      oldQRCodeValue = '';
+      $('#qrData').text(oldQRCodeValue);
+      objectEntity.removeAttribute('gltf-model');
+    });
+
+  } catch (error) {
+    alert(error.message)
+  }
+</script>
+
+</body>
+</html>

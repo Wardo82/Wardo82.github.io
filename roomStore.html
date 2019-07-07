@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/RoomStore.js"></script>
+    </head>
+    <body>
+        <script>
+            var rs = new RoomStore();
+            rs.addRoom("01.02.017", 1);
+            rs.addRoom("01.02.019", 1);
+            rs.addRoom("01.02.019", 1);
+            rs.addRoom("01.03.017", 2);
+            rs.addRoom("03.02.010", 1);
+            rs.addFinger("03.05.*",3);
+            console.log("Number of assigned rooms: " + rs.getSize());
+            rs.printAll();
+            console.log("Node is:" +rs.getRoom("01.02.017"));
+            console.log("Node is:" +rs.getRoom("01.02.019"));
+            console.log("Node is:" +rs.getRoom("01.02.077"));
+            console.log("Node is:" +rs.getRoom("03.05.019"));
+            console.log("Node is:" +rs.getRoom("03.05.000"));
+            console.log("Node is:" +rs.getRoom("03.05.099"));
+            rs.deleteRoom("01.02.19");
+            rs.deleteRoom("01.02.19");
+            rs.deleteRoom("01.03.17");
+            rs.printAll();
+            rs.deleteNode(1);
+            rs.printAll();
+            rs.deleteNode(3);
+            rs.printAll();
+        </script>
+    </body>
+</html>
