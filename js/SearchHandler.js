@@ -2,7 +2,7 @@ document.getElementById('my-form').onsubmit = function() {
     return save_valid_search();
 };
 
-function save__valid_search() {
+function save_valid_search() {
   // Get value from input form before loading next page
   var search_value = document.getElementById('input_search').value;
   // Set the pattern that must be used in order to search for a room

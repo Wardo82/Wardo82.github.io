@@ -1,0 +1,21 @@
+.qr-data-info {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(204, 204, 204, 0.3);
+  padding: 5px;
+}
+
+.tool-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: rgba(204, 204, 204, 0.3);
+  padding: 5px;
+}
+
+.tool-bar .btn-clear {
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+}

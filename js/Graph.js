@@ -134,6 +134,12 @@ UndirectedGraph.prototype.getPathBetween = function (vertex1, vertex2) {
   return path.reverse();
 }
 
+UndirectedGraph.prototype.getVertexById = function (id) {
+  // Returns Vertex by ID
+  // @param id: ID of Vertex
+  return this.nodes[id];
+};
+
 UndirectedGraph.prototype.getDegree = function (idRoot, idDest) {
   // Returns Degree between Root and Destination Nodes
   // @param idRoot: ID of Root-Node
