@@ -7,11 +7,11 @@ AFRAME.registerComponent('rotation-reader', {
               -rotCamera['y'],
               -rotCamera['z']
               );
-        let x = getElementById('x');
+        let x = document.getElementById('x');
         x.innerHTML = rotCamera['x'];
-        let y = getElementById('y');
+        let y = document.getElementById('y');
         y.innerHTML = rotCamera['y'];
-        let z = getElementById('z');
+        let z = document.getElementById('z');
         z.innerHTML = rotCamera['z'];
 
     }

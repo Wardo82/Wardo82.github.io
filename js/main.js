@@ -27,7 +27,7 @@ graph.addEdge(b,c,90);
 graph.addEdge(c,e,180);
 graph.addEdge(c,d,0);
 
-console.log(graph.Dijkstra(a,b));
+//console.log(graph.Dijkstra(a,b));
 
 //Assign Rooms to Nodes
 var rooms = new RoomStore();
@@ -47,8 +47,8 @@ var nextDestination = '';
 
 //Objects that can be displayed
 objects3D = {
-  'arrow': 'http://home.in.tum.de/~gruberfe/mms/assets/arrow.gltf',
-  'pin': 'http://home.in.tum.de/~gruberfe/mms/assets/CesiumMan.gltf',
+  'arrow': 'assets/arrow.gltf',
+  'pin': 'assets/arrow.gltf',
 };
 
 canvasElement = document.createElement("canvas");
@@ -82,7 +82,7 @@ setInterval(function () {
         alert('Cannot find arrow.gltf model! Please check assets folder!');
       }
       oldQRCodeValue = qrCode.data;
-      console.log(qrCode.data);
+      //console.log(qrCode.data);
       $('#qrData').text(qrCode.data);
     } if (qrCode && qrCode.data != '' && qrCode.data == destRoom) {
         //Load Model Pin
