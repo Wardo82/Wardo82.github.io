@@ -1,3 +1,10 @@
+/* Information that goes over the camera */
+#overlay {
+  position: absolute;
+  top: 0;
+  z-index: 3;
+}
+
 .qr-data-info {
   position: fixed;
   top: 0px;

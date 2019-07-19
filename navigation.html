@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+
   <title>Tum Computer Science Room Finder</title>
   <link rel="shortcut icon" href="about:blank">
 
@@ -31,26 +34,28 @@
       </a-entity>
   </a-scene>
 
-  <div class="qr-data-info">
-    QR Data : <span id="qrData"></span> <br>
+  <!-- Wrapper that comprises all elements that are displayed over the camera -->
+  <div id="overlay">
+    <div class="qr-data-info">
+      QR Data : <span id="qrData"></span> <br>
+    </div>
+
+    <div class="field half">
+      <form id="my-form" role=search  onsubmit="" action="navigation.html" method="get">
+        <input type="text" name="search" id="input_search" value="" placeholder="Room ID" pattern="^[0-9]\.[0-9]\.[0-9]$"/>
+      </form>
+    </div><br>
+
+    <div class="tool-bar">
+      <a href="#" class="btn-clear">Clear</a>
+    </div>
+
+    <div class="coordinates">
+      <p id="x"></p>
+      <p id="y"></p>
+      <p id="z"></p>
+    </div>
   </div>
-
-  <div class="field half">
-    <form id="my-form" role=search  onsubmit="" action="navigation.html" method="get">
-      <input type="text" name="search" id="input_search" value="" placeholder="Room ID" pattern="^[0-9]\.[0-9]\.[0-9]$"/>
-    </form>
-  </div><br>
-
-  <div class="tool-bar">
-    <a href="#" class="btn-clear">Clear</a>
-  </div>
-
-  <div class="coordinates">
-    <p id="x"></p>
-    <p id="y"></p>
-    <p id="z"></p>
-  </div>
-
 
   <!-- Scripts -->
   <script src="js/Dimension/browser.min.js"></script>
