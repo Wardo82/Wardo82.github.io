@@ -70,7 +70,7 @@
 
     <a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
         <a-assets>
-            <a-asset-item id="arrow" src="assets/arrow2.gltf"></a-asset-item>
+            <a-asset-item id="arrow" src="assets/arrow.gltf"></a-asset-item>
         </a-assets>
 
         <a-entity camera="active: true" look-controls rotation-reader data-aframe-default-camera>
@@ -257,10 +257,10 @@
               $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
               $('#qrData').text("QRCode data: " + qrCode.data);
             }
-          }
+          });
 
         } catch (error) {
-            alert(error.message)
+            alert(error.message);
         }
     </script>
 
