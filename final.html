@@ -177,7 +177,7 @@
               'pin': 'assets/pin.gltf',
           }; // Dictionary for the objects that can be displayed
           var rot = 0; // Initial rotation of the object with respect to the north (The arrow points up)
-          var translat = new Translation(); // Object used to compute the orientation of the QRCode
+          var qrOrientation = new Translation(); // Object used to compute the orientation of the QRCode
 
           /*
           * Main function
@@ -246,9 +246,9 @@
                 var degree = shortestPath[0].getDegree(shortestPath[1].id);
 
                 //Get Degree
-                var angle = translation.getOrientation(qrCode);
+                var angle = qrOrientation.getOrientation(qrCode);
                 angle = (angle + degree) % 360;
-                var angleRad = translation.toRadian(angle);
+                var angleRad = qrOrientation.toRadian(angle);
                 try {
                   objectEntity.object3D.rotation.set(0, 0, angleRad);
                 } catch (error) {
