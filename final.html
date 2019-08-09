@@ -40,7 +40,6 @@
     </style>
 
     <script type="text/javascript">
-      var objectEntity = document.getElementById('arrowObject'); //Get Object Element: Arrow or Pin
         try {
             AFRAME.registerComponent('rotation-reader', {
                 tick: function () {
@@ -95,6 +94,8 @@
 
     <script type="text/javascript">
         try {
+          //Get Object Element: Arrow or Pin
+          objectEntity = document.getElementById('arrowObject');
           /*
           * 1.- Load room data: The first thing to do should be to load a file (maybe.txt or json)
           * with all data regarding the registered rooms. It can start small with a txt file to later
