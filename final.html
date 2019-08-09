@@ -40,6 +40,7 @@
     </style>
 
     <script type="text/javascript">
+      var objectEntity = document.getElementById('arrowObject'); //Get Object Element: Arrow or Pin
         try {
             AFRAME.registerComponent('rotation-reader', {
                 tick: function () {
@@ -170,7 +171,6 @@
           var gltfModel; // TODO: set a default value. // Filename of the object to be rendered
           var canvasElement = document.createElement("canvas"); // Canvas element used for scanning and rendering
           var canvasContext = canvasElement.getContext("2d"); // The context of the HTML canvas object
-          var objectEntity = document.getElementById('arrowObject'); //Get Object Element: Arrow or Pin
           var objects3D = {
               'arrow': 'assets/arrow.gltf',
               'pin': 'assets/pin.gltf',
@@ -255,7 +255,7 @@
 
               // Data visualization for testing
               $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
-              $('#qrData').text("QRCode data: "qrCode.data);
+              $('#qrData').text("QRCode data: " + qrCode.data);
             }
           }
 
