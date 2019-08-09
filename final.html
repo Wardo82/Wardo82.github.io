@@ -161,7 +161,7 @@
           // Variables for the positioning problem
           var origin; // Origin variable. This will have the Vertex of the node where the user is
           var destination = graph.getVertexById(destRoom); // Get the Vertex of the destination
-          var shortestPath = []; // Array containning the nodes from origin to destination
+          var shortestPath; // Array containning the nodes from origin to destination
           var oldQRCodeValue = ''; // ID of the node where the user currently is
           // TODO: erase if not used.
           // var nextDestination = ''; // ID of the next node in the computed path
@@ -220,7 +220,7 @@
                   }
 
                   gltfModel = objects3D['arrow']; //Load Model Arrow
-                }if (qrCode.data != destRoom) { // If destination is reached
+                }if (qrCode.data == destRoom) { // If destination is reached
                   gltfModel = objects3D['pin']; //Load Model Pin
                 }
 
@@ -242,21 +242,24 @@
               * 4.2.- Scene rendering: render the objects accordingly in the scene
               */
               // Get the degree from the origin node to the next in the path
-              var degree = shortestPath[0].getDegree(shortestPath[1].id);
+              if(shortestPath) { // If there is a computed shortest path
+                var degree = shortestPath[0].getDegree(shortestPath[1].id);
 
-              //Get Degree
-              var angle = transLat.getOrientation(qrCode);
-              angle = (angle + degree) % 360;
-              var angleRad = transLat.toRadian(angle);
-              try {
-                objectEntity.object3D.rotation.set(0, 0, angleRad);
-              } catch (error) {
-                alert(error.message);
+                //Get Degree
+                var angle = translation.getOrientation(qrCode);
+                angle = (angle + degree) % 360;
+                var angleRad = translation.toRadian(angle);
+                try {
+                  objectEntity.object3D.rotation.set(0, 0, angleRad);
+                } catch (error) {
+                  alert(error.message);
+                }
+
+                // Data visualization for testing
+                $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
+                $('#qrData').text("QRCode data: " + qrCode.data);
               }
 
-              // Data visualization for testing
-              $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
-              $('#qrData').text("QRCode data: " + qrCode.data);
             }
           });
 
