@@ -1,75 +1,164 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Multimedia Systems tests</title>
 
-  <title>Tum Computer Science Room Finder</title>
-  <link rel="shortcut icon" href="about:blank">
+    <link rel="stylesheet" href="css/main.css" />
 
-  <!-- CSS stylesheets -->
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/style.css" />
+    <!-- include LATEST a-frame -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1f55d4854fcdb64aad300aac04e6dd64693a48ad/dist/aframe-master.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.1/aframe/build/aframe-ar.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  </head>
+  <body>
 
-  <!-- Load Frameworks that are needed for AR and QR logic -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-  <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
-  <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
-  <script src="https://cozmo.github.io/jsQR/jsQR.js"></script>
 
-  <!-- Register self developed components -->
-  <script src="js/Dimension/jquery.min.js"></script>
-  <script src="js/Components.js"></script>
-</head>
-
-<body class="is-preload">
-
-  <a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
+    <a-scene embedded arjs="debugUIEnabled: false;">
+      <!-- Object declaration -->
       <a-assets>
-          <a-asset-item id="arrow" src="assets/arrow.gltf"></a-asset-item>
+        <a-asset-item id="arrow" src="assets/CesiumMan.gltf"></a-asset-item>
+        <a-asset-item id="arrowA" src="assets/arrow.gltf"></a-asset-item>
       </a-assets>
 
-      <a-entity camera="active: true" look-controls rotation-reader data-aframe-default-camera>
-              <a-entity id="arrowObject" gltf-model="#arrow" position="0 0 -0.6" rotation="90 0 90" scale="0.05 0.05 0.05" visible="true"></a-entity>
-      </a-entity>
-  </a-scene>
+      <!-- Marker for the QR-Code Section -->
+      <a-marker id="animArrow1" type='pattern' url='assets/pattern-rf_small_grey_blue.patt'>
+        <a-entity id="shownArrow" position="0 0 0" scale="0.5 0.5 0.5" rotation="0 0 90" gltf-model="#arrowA"></a-entity>
+      </a-marker>
+      <a-marker id="animArrowA" type='pattern' url='assets/pattern-rf_grey_blue.patt'>
+        <a-entity id="shownArrowA" gltf-model="#arrow" position="0 0 0" rotation="0 0 0" scale="5"></a-entity>
+      </a-marker>
 
-  <!-- Wrapper that comprises all elements that are displayed over the camera -->
-  <div id="overlay">
-    <div class="qr-data-info">
-      QR Data : <span id="qrData"></span> <br>
-    </div>
+      <!-- add a simple camera -->
+      <a-entity camera></a-entity>
 
-    <div class="field half">
-      <form id="my-form" role=search  onsubmit="" action="navigation.html" method="get">
-        <input type="text" name="search" id="input_search" value="" placeholder="Room ID" pattern="^[0-9]\.[0-9]\.[0-9]$"/>
-      </form>
-    </div><br>
+    </a-s cene>
 
-    <div class="tool-bar">
-      <a href="#" class="btn-clear">Clear</a>
-    </div>
+    <script type="text/javascript" src="js/Vertex.js"></script>
+    <script type="text/javascript" src="js/PriorityQueue.js"></script>
+    <script type="text/javascript" src="js/Graph.js"></script>
+    <script type="text/javascript">
+      var id = undefined;
 
-    <div class="coordinates">
-      <p id="x"></p>
-      <p id="y"></p>
-      <p id="z"></p>
-    </div>
-  </div>
+      // window.onload = function(){
+      //   id = localStorage.getItem('input_search');
+      //   document.getElementById("roomID").innerHTML = id;
+      // }
+      // -------------------------------------------------------
+      // ---------------------- Main ---------------------------
+      // -------------------------------------------------------
+      var cross = new Vertex(1);
+      cross.setQRCode("pattern-x.patt");
+      var circle = new Vertex(2);
+      circle.setQRCode("pattern-circle.patt");
+      var triangle = new Vertex(3);
+      triangle.setQRCode("pattern-triangle.patt");
+      var square = new Vertex(4);
+      square.setQRCode("pattern-square.patt");
 
-  <!-- Scripts -->
-  <script src="js/Dimension/browser.min.js"></script>
-  <script src="js/Dimension/breakpoints.min.js"></script>
-  <script src="js/Dimension/util.js"></script>
-  <script src="js/Dimension/main.js"></script>
 
-  <script type="text/javascript" src="js/SearchHandler.js"></script>
-  <!-- Load modules for Queues, Vertices, Graph and Hashmaps-->
-  <script type="text/javascript" src="js/Vertex.js"></script>
-  <script type="text/javascript" src="js/PriorityQueue.js"></script>
-  <script type="text/javascript" src="js/Graph.js"></script>
-  <script type="text/javascript" src="js/RoomStore.js"></script>
-  <script type="text/javascript" src="js/main.js"></script>
-</body>
+      // Instance of graph
+      var graph = new UndirectedGraph();
+      // Node addition
+      graph.addVertex(cross);
+      graph.addVertex(circle);
+      graph.addVertex(triangle);
+      graph.addVertex(square);
+
+      // Edges addition
+      cross.setDistance(circle, 11);
+      graph.addEdge(cross, circle, 315);
+
+      cross.setDistance(circle, 3);
+      graph.addEdge(circle, triangle, 90);
+
+      cross.setDistance(square, 2);
+      graph.addEdge(cross, square, 135);
+
+      circle.setDistance(square, 4);
+      graph.addEdge(square, triangle, 0);
+
+      //console.log(graph.edges);
+
+      // Chosing the proper destination
+      var destination = undefined;
+      switch (id) {
+        case 'triangle':
+          destination = triangle;
+          break;
+        case 'circle':
+          destination = circle;
+          break;
+        case 'square':
+          destination = square;
+          break;
+        default:
+          destination = cross;
+      }
+
+      // Compute path from all vertices
+      // TODO: Do it in a for loop. nodes.length is not working
+      // var dijkstras = [0];
+      // console.log(graph.getLength());
+      // for (var i = 1; i < graph.nodes.length+1; i++) {
+      //   var dijkstra = graph.Dijkstra(graph.nodes[i], destination);
+      //   dijkstras[i] = dijkstra;
+      // }
+      var dijkstras = [];
+      var dijkstraFromSquare = graph.Dijkstra(square, destination);
+      var dijkstraFromCross = graph.Dijkstra(cross, destination);
+      var dijkstraFromTriangle = graph.Dijkstra(triangle, destination);
+      var dijkstraFromCircle = graph.Dijkstra(circle, destination);
+
+      var squarePath = dijkstraFromSquare.path;
+      console.log(squarePath);
+
+      // Once we have the path we can point the arrow marker to the next marker
+      // TODO: What you left was the pointing of the arrows.
+      // For that you need a source, and you get that with a QRCode. Think of using the
+      // QRCode to send you to the same web page but with ?source=id on the URL
+      //document.getElementById()
+      //grab the context from your destination canvas
+
+      // if (destination == cross) {
+      //   var aux = document.getElementById("pattern-square");
+      //   aux.setAttribute("rotation","90 135 0");
+      //   var aux = document.getElementById("pattern-triangle");
+      //   aux.setAttribute("rotation","90 270 0");
+      //   var aux = document.getElementById("pattern-circle");
+      //   aux.setAttribute("rotation","90 315 0");
+      //   var aux = document.getElementById("pattern-x");
+      //   aux.setAttribute("rotation","180 180 0");
+      // }
+
+      //Rotate the Arrow in three Dimensions
+      var entity = document.querySelector("#shownArrow");
+      function rotate(r1, r2, r3) {
+          entity.object3D.rotation.set(r1, r2, r3);
+      }
+
+      //QR-Code Scanning with InstaScan
+      try {
+        let scanner = new Instascan.Scanner({ mirror: false });
+        scanner.addListener('scan', function (content) {
+        console.log("Scanned Barcode Value: " + content);
+        rotate(0,90,0);
+        //alert(content);
+        });
+
+        Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            alert('Keine Kamera gefunden um Marker samt QR-Code einzulesen');
+        }
+        }).catch(function (err) {
+            alert(err);
+        });
+        } catch (err) {
+            alert(err);
+        }
+
+    </script>
+  </body>
 </html>

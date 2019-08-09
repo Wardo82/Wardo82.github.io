@@ -132,7 +132,7 @@
 
     console.log(graph.Dijkstra(a,b));
     console.log(graph.getPathBetween(a, b));
-    
+
     //Assign Rooms to Nodes
     var rooms = new RoomStore();
     rooms.addFinger("00.01.*",1);
@@ -173,7 +173,8 @@
           shortestPath=graph.Dijkstra(qrCode.data, destRoom).path;
           //Get Degree
           //this.graph.getDegree(qrCode.data, shortestPath[0]);
-          alert(qrCode.data);
+          console.log(qrCode);
+          console.log(qrCode.data);
           //Load Model Arrow
           gltfModel = objects3D['arrow'];
           if (gltfModel) {

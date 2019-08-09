@@ -3,9 +3,8 @@
   <head>
     <meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <title>TUM CS RoomFinder</title>
-    <!-- CSS stylesheets -->
     <link rel="stylesheet" href="css/main.css" />
+    <title>RoomFinder</title>
   </head>
   <body class="is-preload">
     <!-- Content wrapper -->
@@ -17,10 +16,11 @@
 				</div>
 				<div class="content">
 					<div class="inner">
-						<h1>TUM CS faculty Room Finder</h1>
+						<h1>RoomFinder</h1>
+						<p>The power of AR to show you the way</p>
 					</div>
           <div class="field half">
-            <form id="my-form" role=search  onsubmit="" action="navigation.html" method="get">
+            <form role=search  onsubmit="saveSearch();" action="navigation.html" method="get">
               <input type="text" name="search" id="input_search" value="" placeholder="Room ID" pattern="^[0-9]\.[0-9]\.[0-9]$"/>
             </form>
   				</div><br>
@@ -30,6 +30,7 @@
 					<ul>
 						<li><a href="#intro">Intro</a></li>
             <li><a href="navigation.html">Navigate</a></li>
+            <li><a href="eduardoTest.html">Eduardo'sTest</a></li>
 						<li><a href="#contact">Contact</a></li>
 					</ul>
 				</nav>
@@ -71,6 +72,12 @@
 							<li><input type="reset" value="Reset" /></li>
 						</ul>
 					</form>
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+					</ul>
 				</article>
       </div>
 
@@ -89,6 +96,6 @@
 		<script src="js/Dimension/breakpoints.min.js"></script>
 		<script src="js/Dimension/util.js"></script>
 		<script src="js/Dimension/main.js"></script>
-    <script src="js/SearchHandler.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

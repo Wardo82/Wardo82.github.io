@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
   <title>Tum Computer Science Room Finder</title>
   <link rel="shortcut icon" href="about:blank">
   <!-- Load Frameworks that are needed for AR and QR logic -->
@@ -47,11 +50,11 @@
                   -rotCamera['y'],
                   -rotCamera['z']
                   );
-            var x = document.getElementById('x');
+            let x = getElementById('x');
             x.innerHTML = rotCamera['x'];
-            var y = document.getElementById('y');
+            let y = getElementById('y');
             y.innerHTML = rotCamera['y'];
-            var z = document.getElementById('z');
+            let z = getElementById('z');
             z.innerHTML = rotCamera['z'];
 
         }
@@ -63,140 +66,101 @@
   </script>
 </head>
 
-<body style='margin : 0px; overflow: hidden;'>
+<body>
 
-  <a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
-      <a-assets>
-          <a-asset-item id="arrow" src="assets/arrow.gltf"></a-asset-item>
-      </a-assets>
+<!-- <a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
+    <a-assets>
+        <a-asset-item id="arrow" src="http://home.in.tum.de/~gruberfe/mms/assets/arrow.gltf"></a-asset-item>
+    </a-assets>
 
-      <a-entity camera="active: true" look-controls rotation-reader data-aframe-default-camera>
-              <a-entity id="arrowObject" gltf-model="#arrow" position="0 0 -0.6" rotation="90 0 90" scale="0.05 0.05 0.05" visible="true"></a-entity>
-      </a-entity>
-  </a-scene>
+    <a-entity camera="active: true" look-controls rotation-reader data-aframe-default-camera>
+            <a-entity id="arrowObject" gltf-model="#arrow" position="0 0 -0.6" rotation="90 0 90" scale="0.05 0.05 0.05" visible="true"></a-entity>
+    </a-entity>
+</a-scene> -->
 
-  <div class="qr-data-info">
-    QR Data : <span id="qrData"></span> <br>
+<div class="qr-data-info">
+  QR Data : <span id="qrData"></span> <br>
+</div>
+
+<div class="tool-bar">
+  <a href="#" class="btn-clear">Clear</a>
+</div>
+
+<div class="coordinates">
+  <p id="x"></p>
+  <p id="y"></p>
+  <p id="z"></p>
+</div>
+
+<p id="loadingMessage"></p>
+<canvas id="canvas">
+</canvas>
+
+<div id="output">
+    <div id="outputMessage">No QR code detected.</div>
+    <div hidden=""><b>Data:</b> <span id="outputData"></span></div>
   </div>
 
-  <div class="tool-bar">
-    <p id="x"></p>
-    <p id="y"></p>
-    <p id="z"></p>
-    <a href="#" class="btn-clear">Clear</a>
-  </div>
+<script>
+  var video = document.createElement("video");
+  var canvasElement = document.getElementById("canvas");
+  var canvas = canvasElement.getContext("2d");
+  var loadingMessage = document.getElementById("loadingMessage");
+  var outputContainer = document.getElementById("output");
+  var outputMessage = document.getElementById("outputMessage");
+  var outputData = document.getElementById("outputData");
+
+  function drawLine(begin, end, color) {
+    canvas.beginPath();
+    canvas.moveTo(begin.x, begin.y);
+    canvas.lineTo(end.x, end.y);
+    canvas.lineWidth = 4;
+    canvas.strokeStyle = color;
+    canvas.stroke();
+  }
+
+  // Use facingMode: environment to attemt to get the front camera on phones
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+    video.srcObject = stream;
+    video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+    video.play();
+    requestAnimationFrame(tick);
+  });
+
+  function tick() {
+    loadingMessage.innerText = "⌛ Loading video..."
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      loadingMessage.hidden = true;
+      canvasElement.hidden = false;
+      outputContainer.hidden = false;
+
+      canvasElement.height = video.videoHeight;
+      canvasElement.width = video.videoWidth;
+      canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+      var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+      var code = jsQR(imageData.data, imageData.width, imageData.height, {
+        inversionAttempts: "dontInvert",
+      });
+      if (code) {
+        var i = [code.location.topLeftCorner.x-code.location.topRightCorner.x,
+                 code.location.topLeftCorner.y-code.location.topRightCorner.y];
+        var j = [code.location.topLeftCorner.x-code.location.bottomLeftCorner.x,
+                 code.location.topLeftCorner.y-code.location.bottomLeftCorner.y];
 
 
-<script type="text/javascript">
-  try {
-    //Get Object Element: Arrow or Pin
-    objectEntity = document.getElementById('arrowObject');
-    // Get destination out of local storage
-    var destRoomInput = localStorage.getItem('input_search');
-    //Build Graph
-    // Instance of graph
-    var graph = new UndirectedGraph();
-    var a = new Vertex(1);
-    var b = new Vertex(2);
-    var c = new Vertex(3);
-    var d = new Vertex(4);
-    var e = new Vertex(5);
-    // Node addition
-    graph.addVertex(a);
-    graph.addVertex(b);
-    graph.addVertex(c);
-    graph.addVertex(d);
-    graph.addVertex(e);
-
-    a.setDistance(b,10);
-    b.setDistance(c,10);
-    c.setDistance(d,10);
-    c.setDistance(e,10);
-
-    graph.addEdge(a,b,90);
-    graph.addEdge(b,c,90);
-    graph.addEdge(c,e,180);
-    graph.addEdge(c,d,0);
-
-    console.log(graph.Dijkstra(a,b));
-
-    //Assign Rooms to Nodes
-    var rooms = new RoomStore();
-    rooms.addFinger("00.01.*",1);
-    rooms.addFinger("00.02.*",2);
-    rooms.addFinger("01.03.*",4);
-    rooms.addRoom("01.04.005",5);
-
-
-    var destRoom=rooms.getRoom("01.04.005");
-    /*
-    *   oldQRCodeValue and nextDestination both hold a number that represents a node of the graph
-    *   Based on these two attributes the system decides if a new path has to be rendered and what model to display on-top of the marker
-    */
-    var oldQRCodeValue = '';
-    var nextDestination = '';
-
-    //Objects that can be displayed
-    objects3D = {
-      'arrow': 'http://home.in.tum.de/~gruberfe/mms/assets/arrow.gltf',
-      'pin': 'http://home.in.tum.de/~gruberfe/mms/assets/CesiumMan.gltf',
-    };
-
-    canvasElement = document.createElement("canvas");
-    canvasContext = canvasElement.getContext("2d");
-
-    var rot=0;
-
-    //Try to read a QR Code every 500 Milliseconds and change model based on its value
-    setInterval(function () {
-      //rot=(rot+45)%360;
-      //objectEntity.setAttribute('rotation', {x:0,y:rot,z:0});
-      video = document.querySelector("video");
-      if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
-        canvasElement.height = video.videoHeight;
-        canvasElement.width = video.videoWidth;
-        canvasContext.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-        //Reading out QR, Code by using the current frame of the camera produced by aFrame
-        var imageData = canvasContext.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        var qrCode = jsQR(imageData.data, imageData.width, imageData.height);
-        if (qrCode && qrCode.data != '' && qrCode.data != oldQRCodeValue) {
-          //Calculate Shortest Path from current Node
-          shortestPath=graph.Dijkstra(qrCode.data, destRoom).path;
-          //Get Degree
-          //this.graph.getDegree(qrCode.data, shortestPath[0]);
-          alert(qrCode.data);
-          //Load Model Arrow
-          gltfModel = objects3D['arrow'];
-          if (gltfModel) {
-            //objectEntity.setAttribute('gltf-model', 'url(' + gltfModel + ')');
-          } else {
-            alert('Cannot find arrow.gltf model! Please check assets folder!');
-          }
-          oldQRCodeValue = qrCode.data;
-          console.log(qrCode.data);
-          $('#qrData').text(qrCode.data);
-        } if (qrCode && qrCode.data != '' && qrCode.data == destRoom) {
-            //Load Model Pin
-            gltfModel = objects3D['pin'];
-            if (gltfModel) {
-                //objectEntity.setAttribute('gltf-model', 'url(' + gltfModel + ')');
-            } else {
-                alert('Cannot find pin.gltf model! Please check assets folder!');
-            }
-        } else {
-          console.log('Currently there is no readable QR-Code!');
-        }
+        drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+        drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+        drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+        drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+        outputMessage.hidden = true;
+        outputData.parentElement.hidden = false;
+        outputData.innerText = code.data;
+      } else {
+        outputMessage.hidden = false;
+        outputData.parentElement.hidden = true;
       }
-    }, 300);
-
-    $('.btn-clear').click(function () {
-      oldQRCodeValue = '';
-      $('#qrData').text(oldQRCodeValue);
-      objectEntity.removeAttribute('gltf-model');
-    });
-
-  } catch (error) {
-    alert(error.message)
+    }
+    requestAnimationFrame(tick);
   }
 </script>
 
