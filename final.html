@@ -172,6 +172,16 @@
           var gltfModel; // TODO: set a default value. // Filename of the object to be rendered
           var canvasElement = document.createElement("canvas"); // Canvas element used for scanning and rendering
           var canvasContext = canvasElement.getContext("2d"); // The context of the HTML canvas object
+          function drawLine(begin, end, color) { // TODO: erase after testing. Or move to utils.js
+            // Draws a line in canvas element from begin to end.
+            canvasContext.beginPath();
+            canvasContext.moveTo(begin.x, begin.y);
+            canvasContext.lineTo(end.x, end.y);
+            canvasContext.lineWidth = 4;
+            canvasContext.strokeStyle = color;
+            canvasContext.stroke();
+          }
+
           var objects3D = {
               'arrow': 'assets/arrow.gltf',
               'pin': 'assets/pin.gltf',
@@ -238,8 +248,17 @@
                 if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
                   var degree = shortestPath[0].getDegree(shortestPath[1].id);
 
+                  drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+                  drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+                  drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+                  drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+
                   //Get Degree
                   var angle = qrOrientation.getOrientation(qrCode);
+                  var i = [qrOrientation.Cx, qrOrientation.Cy];
+                  var j = [qrOrientation.Px, qrOrientation.Px];
+                  drawLine(i, j, "#0000FF");
+                  
                   angle = (angle + degree) % 360;
                   var angleRad = qrOrientation.toRadian(angle);
                   try {
@@ -250,6 +269,7 @@
                 }
 
               }else{ // If no QR code exists
+                objectEntity.object3D.visible = false; // Hide arrow
                 counter += 300;
                 if (counter >= 1200) {
                     autoEnabled = true;
