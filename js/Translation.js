@@ -24,34 +24,29 @@ Translation.prototype.getOrientation = function (qrObj) {
         //Get X and Y Difference between top and middle
         this.Diffx = this.Cx - this.Px;
         this.Diffy = this.Cy - this.Py;
-        this.Hyp = Math.sqrt((this.Diffx * this.Diffx + this.Diffy * this.Diffy));
-        //Calculate Angle in Degree
-        this.alpha = Math.asin(this.Diffy / this.Hyp)*360/(2*Math.PI);
+        this.Hyp = Math.sqrt((this.Diffx * this.Diffx + this.Diffy * this.Diffy)); // Hypotenuse with Pythagorean theorem
+        this.alpha = Math.asin(this.Diffy / this.Hyp)*360/(2*Math.PI); //Compute angle in degree
 
         //Adjustemnt of angle to support all quadrants of the unit circle
-        //Adjustment is based on the postion of the TopLeftCorner
-        //Third Quadrant
-        // if ((qrObj.location['topLeftCorner']['x'] <= this.Cx) && (qrObj.location['topLeftCorner']['y'] >= this.Cy)) {
-        //     this.alpha += 180.0;
-        // }
-        // //Fourth Quadrant
-        // else if ((qrObj.location['topLeftCorner']['x'] >= this.Cx) && (qrObj.location['topLeftCorner']['y'] >= this.Cy)) {
-        //     this.alpha += 270.0;
-        // }
-        // //First Quadrant
-        // else if ((qrObj.location['topLeftCorner']['x'] >= this.Cx) && (qrObj.location['topLeftCorner']['y'] <= this.Cy)) {
-        //     this.alpha += 0.0;
-        // }
-        // //Second Quadrant
-        // else if ((qrObj.location['topLeftCorner']['x'] <= this.Cx) && (qrObj.location['topLeftCorner']['y'] <= this.Cy)) {
-        //     //Nothing
-        //     this.alpha += 0.0;
-        // }
+        if (this.Diffx > 0 && this.Diffy > 0) { //First Quadrant: x > 0 and y > 0
+          // Do nothing
+        } else if( this.Diffx < 0 && this.Diffy > 0){ //Second Quadrant: x < 0 and y > 0
+          this.alpha = this.alpha + 90; // Add 90 degrees to alpha.
+        } else if( this.Diffx < 0 && this.Diffy < 0){ // Third quadrant: x < 0 and y < 0
+           /* alpha is the degree of a vector between (-1, 0) and (0,-1). That means that the vector (-1,-1) has
+           a degree of -45. We substract 180 and multiply by -1 to get 225 degrees w.r.t to (1, 0) */
+          this.alpha = -(this.alpha - 180);
+        } else if( this.Diffx > 0 && this.Diffy < 0) { // Fourth quadrant: x > 0 and y < 0
+          /* alpha is the degree of a vector between (1, 0) and (0, -1). That means that the vector (1, -1) has
+          a degree of -45. We substract 270 and multiply by -1 to get 315 degrees w.r.t to (1, 0) */
+          this.alpha = -(this.alpha - 270);
+        }
+
     }
     catch (error) {
         alert(error.message)
     }
-    return this.alpha; //(this.alpha - 90.0) % 360;
+    return this.alpha;
 };
 
 //Computes the radian of an angle given in degree
