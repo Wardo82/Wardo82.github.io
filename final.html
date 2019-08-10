@@ -82,6 +82,7 @@
     <div class="qr-data-info">
         QR Data : <span id="qrData"></span> <br>
         Alpha : <span id="angleData"></span> <br>
+        <input type="text" name="enter" class="enter" value="0" id="angleText"/>
     </div>
 
     <div class="tool-bar">
@@ -245,7 +246,8 @@
                   angle = (angle + degree) % 360;
                   var angleRad = qrOrientation.toRadian(angle);
                   try {
-                    objectEntity.object3D.rotation.set(0, 0, angleRad);
+                    var text = document.getElementById("angleText");
+                    objectEntity.object3D.rotation.set(0, 0, text.value*(2*Math.PI)/360);
                   } catch (error) {
                     alert(error.message);
                   }
