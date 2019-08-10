@@ -196,16 +196,16 @@
               // Draw the image from the video element in our canvas
               canvasContext.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
 
-              /*
-              * 4.1.- User positioning: Get user position from camera
-              */
-              /* TODO: Can this be moved to a separate file and call pos = getUserPosition() ?*/
               //Reading out QR Code by using the current frame of the camera produced by A-Frame
               var imageData = canvasContext.getImageData(0, 0, canvasElement.width, canvasElement.height);
               // Get QR code object using jsQR library. It takes an image a tries to detect the QR within it
               var qrCode = jsQR(imageData.data, imageData.width, imageData.height);
 
               if(qrCode && qrCode.data != ''){ // If QR code exists and data is not empty
+                /*
+                * 4.1.- User positioning: Get user position from camera
+                */
+                /* TODO: Can this be moved to a separate file and call pos = getUserPosition() ?*/
                 /* Based on qrCode.data the system decides if a new path has to be rendered and what
                 model to display on-top of the marker*/
                 if (qrCode.data != oldQRCodeValue) { // If the scanned id is new
@@ -230,6 +230,23 @@
                 } else {
                   alert('Cannot find'+ gltfModel +'! Please check assets folder!');
                 }
+
+                /*
+                * 4.2.- Scene rendering: render the objects accordingly in the scene
+                */
+                // Get the degree from the origin node to the next in the path
+                if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
+                  var degree = shortestPath[0].getDegree(shortestPath[1].id);
+
+                  //Get Degree
+                  var angle = qrOrientation.getOrientation(qrCode);
+                  angle = (angle + degree) % 360;
+                  var angleRad = qrOrientation.toRadian(angle);
+                  try {
+                    objectEntity.object3D.rotation.set(0, 0, angleRad);
+                  } catch (error) {
+                    alert(error.message);
+                  }
               }else{ // If no QR code exists
                 counter += 300;
                 if (counter >= 1200) {
@@ -238,26 +255,9 @@
                 console.log('Currently there is no readable QR-Code!');
               }
 
-              /*
-              * 4.2.- Scene rendering: render the objects accordingly in the scene
-              */
-              // Get the degree from the origin node to the next in the path
-              if(shortestPath) { // If there is a computed shortest path
-                var degree = shortestPath[0].getDegree(shortestPath[1].id);
-
-                //Get Degree
-                var angle = qrOrientation.getOrientation(qrCode);
-                angle = (angle + degree) % 360;
-                var angleRad = qrOrientation.toRadian(angle);
-                try {
-                  objectEntity.object3D.rotation.set(0, 0, angleRad);
-                } catch (error) {
-                  alert(error.message);
-                }
-
                 // Data visualization for testing
                 $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
-                $('#qrData').text("QRCode data: " + qrCode.data);
+                $('#qrData').text(oldQRCodeValue);
               }
 
             }
