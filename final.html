@@ -238,16 +238,16 @@
                 */
                 // Get the degree from the origin node to the next in the path
                 if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
-                  var degree = shortestPath[0].getDegree(shortestPath[1].id);
+                  var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
+                  var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
 
-                  //Get Degree
-                  var angle = qrOrientation.getOrientation(qrCode);
-
-                  angle = (angle + degree) % 360;
-                  var angleRad = qrOrientation.toRadian(angle);
+                  var rotAngle = (angle + 90 - degree) % 360;
+                  var angleRad = qrOrientation.toRadian(rotAngle); // Transform to radians
                   try {
                     var text = document.getElementById("angleText");
-                    objectEntity.object3D.rotation.set(0, 0, text.value*(2*Math.PI)/360);
+                    var manual = text.value*(2*Math.PI)/360);
+
+                    objectEntity.object3D.rotation.set(0, 0, angleRad);
                   } catch (error) {
                     alert(error.message);
                   }
