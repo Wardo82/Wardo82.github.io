@@ -18,9 +18,9 @@ Translation.prototype.getOrientation = function (qrObj) {
     try {
         //Get the X and Y coordinates of the given Object
         this.Cx = (qrObj.location['topRightCorner']['x'] + qrObj.location['topLeftCorner']['x'] + qrObj.location['bottomRightCorner']['x'] + qrObj.location['bottomLeftCorner']['x']) / 4.0;
-        this.Cy = (qrObj.location['topRightCorner']['y'] + qrObj.location['topLeftCorner']['y'] + qrObj.location['bottomRightCorner']['y'] + qrObj.location['bottomLeftCorner']['y']) / 4.0;
+        this.Cy = -(qrObj.location['topRightCorner']['y'] + qrObj.location['topLeftCorner']['y'] + qrObj.location['bottomRightCorner']['y'] + qrObj.location['bottomLeftCorner']['y']) / 4.0;
         this.Px = (qrObj.location['topRightCorner']['x'] + qrObj.location['topLeftCorner']['x']) / 2.0;
-        this.Py = (qrObj.location['topRightCorner']['y'] + qrObj.location['topLeftCorner']['y']) / 2.0;
+        this.Py = -(qrObj.location['topRightCorner']['y'] + qrObj.location['topLeftCorner']['y']) / 2.0;
         //Get X and Y Difference between top and middle
         this.Diffx = this.Px - this.Cx;
         this.Diffy = this.Py - this.Cy;
