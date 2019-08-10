@@ -173,19 +173,6 @@
           var canvasElement = document.createElement("canvas"); // Canvas element used for scanning and rendering
           var canvasContext = canvasElement.getContext("2d"); // The context of the HTML canvas object
 
-          // TODO: erase after testing. Or move to utils.js
-          var canvasTest = document.createElement("canvas");
-          canvasTest.setAttribute("style", "width: 1280px; height: 960px; position: absolute; top: 0px; left: 0px; z-index: 1; margin-left: 0px; margin-top: -295px;");
-          var canvas = canvasTest.getContext("2d");
-          function drawLine(begin, end, color) {
-            canvas.beginPath();
-            canvas.moveTo(begin.x, begin.y);
-            canvas.lineTo(end.x, end.y);
-            canvas.lineWidth = 4;
-            canvas.strokeStyle = color;
-            canvas.stroke();
-          }
-
           var objects3D = {
               'arrow': 'assets/arrow.gltf',
               'pin': 'assets/pin.gltf',
@@ -252,16 +239,8 @@
                 if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
                   var degree = shortestPath[0].getDegree(shortestPath[1].id);
 
-                  drawLine(qrCode.location.topLeftCorner, qrCode.location.topRightCorner, "#FF3B58");
-                  drawLine(qrCode.location.topRightCorner, qrCode.location.bottomRightCorner, "#FF3B58");
-                  drawLine(qrCode.location.bottomRightCorner, qrCode.location.bottomLeftCorner, "#FF3B58");
-                  drawLine(qrCode.location.bottomLeftCorner, qrCode.location.topLeftCorner, "#FF3B58");
-
                   //Get Degree
                   var angle = qrOrientation.getOrientation(qrCode);
-                  var i = {x:qrOrientation.Cx, y:qrOrientation.Cy};
-                  var j = {x:qrOrientation.Px, y:qrOrientation.Py};
-                  drawLine(i, j, "#0000FF");
 
                   angle = (angle + degree) % 360;
                   var angleRad = qrOrientation.toRadian(angle);
@@ -291,7 +270,6 @@
             alert(error.message);
         }
 
-        document.body.appendChild(canvasTest);
     </script>
 
 </body>

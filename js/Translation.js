@@ -22,8 +22,8 @@ Translation.prototype.getOrientation = function (qrObj) {
         this.Px = (qrObj.location['topRightCorner']['x'] + qrObj.location['topLeftCorner']['x']) / 2.0;
         this.Py = (qrObj.location['topRightCorner']['y'] + qrObj.location['topLeftCorner']['y']) / 2.0;
         //Get X and Y Difference between top and middle
-        this.Diffx = this.Px >= this.Cx ? (this.Px - this.Cx) : (this.Cx - this.Px);
-        this.Diffy = this.Py >= this.Cy ? (this.Py - this.Cy) : (this.Cy - this.Py);
+        this.Diffx = Math.abs(this.Cx - this.Px);
+        this.Diffy = Math.abs(this.Cy - this.Py);
         this.Hyp = Math.sqrt((this.Diffx * this.Diffx + this.Diffy * this.Diffy));
         //Calculate Angle in Degree
         this.alpha = Math.sin(this.Diffy / this.Hyp) * 100.0;
@@ -31,27 +31,27 @@ Translation.prototype.getOrientation = function (qrObj) {
         //Adjustemnt of angle to support all quadrants of the unit circle
         //Adjustment is based on the postion of the TopLeftCorner
         //Third Quadrant
-        if ((qrObj.location['topLeftCorner']['x'] <= this.Cx) && (qrObj.location['topLeftCorner']['y'] >= this.Cy)) {
-            this.alpha += 180.0;
-        }
-        //Fourth Quadrant 
-        else if ((qrObj.location['topLeftCorner']['x'] >= this.Cx) && (qrObj.location['topLeftCorner']['y'] >= this.Cy)) {
-            this.alpha += 270.0;
-        }
-        //First Quadrant
-        else if ((qrObj.location['topLeftCorner']['x'] >= this.Cx) && (qrObj.location['topLeftCorner']['y'] <= this.Cy)) {
-            this.alpha += 0.0;
-        }
-        //Second Quadrant
-        else if ((qrObj.location['topLeftCorner']['x'] <= this.Cx) && (qrObj.location['topLeftCorner']['y'] <= this.Cy)) {
-            //Nothing
-            this.alpha += 0.0;
-        }
+        // if ((qrObj.location['topLeftCorner']['x'] <= this.Cx) && (qrObj.location['topLeftCorner']['y'] >= this.Cy)) {
+        //     this.alpha += 180.0;
+        // }
+        // //Fourth Quadrant
+        // else if ((qrObj.location['topLeftCorner']['x'] >= this.Cx) && (qrObj.location['topLeftCorner']['y'] >= this.Cy)) {
+        //     this.alpha += 270.0;
+        // }
+        // //First Quadrant
+        // else if ((qrObj.location['topLeftCorner']['x'] >= this.Cx) && (qrObj.location['topLeftCorner']['y'] <= this.Cy)) {
+        //     this.alpha += 0.0;
+        // }
+        // //Second Quadrant
+        // else if ((qrObj.location['topLeftCorner']['x'] <= this.Cx) && (qrObj.location['topLeftCorner']['y'] <= this.Cy)) {
+        //     //Nothing
+        //     this.alpha += 0.0;
+        // }
     }
     catch (error) {
         alert(error.message)
     }
-    return (this.alpha - 90.0) % 360;
+    return this.alpha; //(this.alpha - 90.0) % 360;
 };
 
 //Computes the radian of an angle given in degree
