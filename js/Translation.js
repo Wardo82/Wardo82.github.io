@@ -22,8 +22,8 @@ Translation.prototype.getOrientation = function (qrObj) {
         this.Px = (qrObj.location['topRightCorner']['x'] + qrObj.location['topLeftCorner']['x']) / 2.0;
         this.Py = (qrObj.location['topRightCorner']['y'] + qrObj.location['topLeftCorner']['y']) / 2.0;
         //Get X and Y Difference between top and middle
-        this.Diffx = Math.abs(this.Cx - this.Px);
-        this.Diffy = Math.abs(this.Cy - this.Py);
+        this.Diffx = this.Cx - this.Px;
+        this.Diffy = this.Cy - this.Py;
         this.Hyp = Math.sqrt((this.Diffx * this.Diffx + this.Diffy * this.Diffy));
         //Calculate Angle in Degree
         this.alpha = Math.asin(this.Diffy / this.Hyp)*360/(2*Math.PI);
