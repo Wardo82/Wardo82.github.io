@@ -258,8 +258,8 @@
 
                   //Get Degree
                   var angle = qrOrientation.getOrientation(qrCode);
-                  var i = [qrOrientation.Cx, qrOrientation.Cy];
-                  var j = [qrOrientation.Px, qrOrientation.Px];
+                  var i = {x:qrOrientation.Cx, y:qrOrientation.Cy};
+                  var j = {x:qrOrientation.Px, y:qrOrientation.Py};
                   drawLine(i, j, "#0000FF");
 
                   angle = (angle + degree) % 360;
