@@ -248,17 +248,17 @@
                 if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
                   var degree = shortestPath[0].getDegree(shortestPath[1].id);
 
-                  drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-                  drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-                  drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-                  drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+                  drawLine(qrCode.location.topLeftCorner, qrCode.location.topRightCorner, "#FF3B58");
+                  drawLine(qrCode.location.topRightCorner, qrCode.location.bottomRightCorner, "#FF3B58");
+                  drawLine(qrCode.location.bottomRightCorner, qrCode.location.bottomLeftCorner, "#FF3B58");
+                  drawLine(qrCode.location.bottomLeftCorner, qrCode.location.topLeftCorner, "#FF3B58");
 
                   //Get Degree
                   var angle = qrOrientation.getOrientation(qrCode);
                   var i = [qrOrientation.Cx, qrOrientation.Cy];
                   var j = [qrOrientation.Px, qrOrientation.Px];
                   drawLine(i, j, "#0000FF");
-                  
+
                   angle = (angle + degree) % 360;
                   var angleRad = qrOrientation.toRadian(angle);
                   try {
