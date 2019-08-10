@@ -25,21 +25,19 @@ Translation.prototype.getOrientation = function (qrObj) {
         this.Diffx = this.Px - this.Cx;
         this.Diffy = this.Py - this.Cy;
         this.Hyp = Math.sqrt((this.Diffx * this.Diffx + this.Diffy * this.Diffy)); // Hypotenuse with Pythagorean theorem
-        this.alpha = Math.asin(this.Diffy / this.Hyp)*360/(2*Math.PI); //Compute angle in degree
+        this.alpha = Math.asin(this.Diffy / this.Hyp)*360/(2*Math.PI); //Compute angle in degree w.r.t the horizontal axis
 
         //Adjustemnt of angle to support all quadrants of the unit circle
-        if (this.Diffx > 0 && this.Diffy < 0) { //First Quadrant: x > 0 and y > 0
+        if (this.Diffx > 0 && this.Diffy > 0) { //First Quadrant: x > 0 and y > 0
           // Do nothing
-        } else if( this.Diffx < 0 && this.Diffy < 0){ //Second Quadrant: x < 0 and y > 0
-          this.alpha = this.alpha + 90; // Add 90 degrees to alpha.
-        } else if( this.Diffx < 0 && this.Diffy > 0){ // Third quadrant: x < 0 and y < 0
+        } else if( this.Diffx < 0 && this.Diffy > 0){ //Second Quadrant: x < 0 and y > 0
+          this.alpha = 180 - this.alpha;
+        } else if( this.Diffx < 0 && this.Diffy < 0){ // Third quadrant: x < 0 and y < 0
            /* alpha is the degree of a vector between (-1, 0) and (0,-1). That means that the vector (-1,-1) has
            a degree of -45. We substract 180 and multiply by -1 to get 225 degrees w.r.t to (1, 0) */
-          this.alpha = -(this.alpha - 180);
-        } else if( this.Diffx > 0 && this.Diffy > 0) { // Fourth quadrant: x > 0 and y < 0
-          /* alpha is the degree of a vector between (1, 0) and (0, -1). That means that the vector (1, -1) has
-          a degree of -45. We substract 270 and multiply by -1 to get 315 degrees w.r.t to (1, 0) */
-          this.alpha = -(this.alpha - 270);
+          this.alpha = -(-180 + this.alpha);
+        } else if( this.Diffx > 0 && this.Diffy < 0) { // Fourth quadrant: x > 0 and y < 0
+          this.alpha = 360 - this.alpha;
         }
 
     }
