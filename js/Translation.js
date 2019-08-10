@@ -31,13 +31,13 @@ Translation.prototype.getOrientation = function (qrObj) {
         if (this.Diffx > 0 && this.Diffy > 0) { //First Quadrant: x > 0 and y > 0
           // Do nothing
         } else if( this.Diffx < 0 && this.Diffy > 0){ //Second Quadrant: x < 0 and y > 0
-          this.alpha = 180 - this.alpha;
+          this.alpha = 180 - this.alpha; // 180 degrees minus the angle w.r.t the left horizontal axis
         } else if( this.Diffx < 0 && this.Diffy < 0){ // Third quadrant: x < 0 and y < 0
            /* alpha is the degree of a vector between (-1, 0) and (0,-1). That means that the vector (-1,-1) has
            a degree of -45. We substract 180 and multiply by -1 to get 225 degrees w.r.t to (1, 0) */
           this.alpha = -(-180 + this.alpha);
         } else if( this.Diffx > 0 && this.Diffy < 0) { // Fourth quadrant: x > 0 and y < 0
-          this.alpha = 360 - this.alpha;
+          this.alpha = 360 + this.alpha; // 360 degrees minus (the value of alpha is negative) the angle 
         }
 
     }
