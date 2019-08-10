@@ -79,9 +79,6 @@
         </a-entity>
     </a-scene>
 
-    <!-- The canvas from where the qrCode is scanned -->
-    <canvas id="canvas"></canvas>
-
     <div class="qr-data-info">
         QR Data : <span id="qrData"></span> <br>
         Alpha : <span id="angleData"></span> <br>
@@ -93,7 +90,6 @@
         <p id="z"></p>
         <a href="#" class="btn-clear">Clear</a>
     </div>
-
 
 
     <script type="text/javascript">
@@ -174,17 +170,19 @@
 
           // Variables for the rendering problem
           var gltfModel; // TODO: set a default value. // Filename of the object to be rendered
-          var canvasElement = document.getElementById("canvas"); // Canvas element used for scanning and rendering
+          var canvasElement = document.createElement("canvas"); // Canvas element used for scanning and rendering
           var canvasContext = canvasElement.getContext("2d"); // The context of the HTML canvas object
-          
-          function drawLine(begin, end, color) { // TODO: erase after testing. Or move to utils.js
-            // Draws a line in canvas element from begin to end.
-            canvasContext.beginPath();
-            canvasContext.moveTo(begin.x, begin.y);
-            canvasContext.lineTo(end.x, end.y);
-            canvasContext.lineWidth = 4;
-            canvasContext.strokeStyle = color;
-            canvasContext.stroke();
+
+          // TODO: erase after testing. Or move to utils.js
+          var canvasTest = document.createElement("canvas");
+          var canvas = canvasTest.getContext("2d");
+          function drawLine(begin, end, color) {
+            canvas.beginPath();
+            canvas.moveTo(begin.x, begin.y);
+            canvas.lineTo(end.x, end.y);
+            canvas.lineWidth = 4;
+            canvas.strokeStyle = color;
+            canvas.stroke();
           }
 
           var objects3D = {
@@ -291,6 +289,8 @@
         } catch (error) {
             alert(error.message);
         }
+
+        document.body.appendChild(canvasTest);
     </script>
 
 </body>
