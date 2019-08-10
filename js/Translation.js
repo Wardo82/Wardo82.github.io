@@ -26,7 +26,7 @@ Translation.prototype.getOrientation = function (qrObj) {
         this.Diffy = Math.abs(this.Cy - this.Py);
         this.Hyp = Math.sqrt((this.Diffx * this.Diffx + this.Diffy * this.Diffy));
         //Calculate Angle in Degree
-        this.alpha = Math.sin(this.Diffy / this.Hyp) * 100.0;
+        this.alpha = Math.asin(this.Diffy / this.Hyp)*360/(2*Math.PI);
 
         //Adjustemnt of angle to support all quadrants of the unit circle
         //Adjustment is based on the postion of the TopLeftCorner
