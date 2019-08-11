@@ -233,7 +233,9 @@
                   rotationAngle = (angle + degree - 90) % 360;
                   var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
                   try {
-                    objectEntity.object3D.rotation.set(0, 0, angleRad);
+                    objectEntity.object3D.rotation.set(objectEntity.object3D.rotation['x'],
+                                                       objectEntity.object3D.rotation['y'],
+                                                       angleRad);
                   } catch (error) {
                     alert(error.message);
                   }
