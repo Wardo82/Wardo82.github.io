@@ -67,22 +67,20 @@
                   var posz = document.getElementById('posz');
                   posz.innerHTML = posCamera['z'];
 
-                  var position = new THREE.Vector3();
-                  var rotation = new THREE.Euler();
-                  this.el.object3D.getWorldPosition(position);
-                  this.el.object3D.getWorldRotation(rotation);
-                  var worldx = document.getElementById('worldx');
-                  worldx.innerHTML = position['x'];
-                  var worldy = document.getElementById('worldy');
-                  worldy.innerHTML = position['y'];
-                  var worldz = document.getElementById('worldz');
-                  worldz.innerHTML = position['z'];
-                  var world_rotx = document.getElementById('world_rotx');
-                  world_rotx.innerHTML = rotation['x'];
-                  var world_roty = document.getElementById('world_roty');
-                  world_roty.innerHTML = rotation['y'];
-                  var world_rotz = document.getElementById('world_rotz');
-                  world_rotz.innerHTML = rotation['z'];
+                  var position = objectEntity.object3D.position;
+                  var rotation = objectEntity.object3D.rotation;
+                  var objectx = document.getElementById('objectx');
+                  objectx.innerHTML = position['x'];
+                  var objecty = document.getElementById('objecty');
+                  objecty.innerHTML = position['y'];
+                  var objectz = document.getElementById('objectz');
+                  objectz.innerHTML = position['z'];
+                  var object_rotx = document.getElementById('object_rotx');
+                  object_rotx.innerHTML = rotation['x'];
+                  var object_roty = document.getElementById('object_roty');
+                  object_roty.innerHTML = rotation['y'];
+                  var object_rotz = document.getElementById('object_rotz');
+                  object_rotz.innerHTML = rotation['z'];
                   }
             });
         } catch (error) {
@@ -108,12 +106,12 @@
     </a-scene>
 
     <div class="qr-data-info">
-        <p id="worldx"></p>
-        <p id="worldy"></p>
-        <p id="worldz"></p>
-        <p id="world_rotx"></p>
-        <p id="world_roty"></p>
-        <p id="world_rotz"></p>
+        <p id="objectx"></p>
+        <p id="objecty"></p>
+        <p id="objectz"></p>
+        <p id="object_rotx"></p>
+        <p id="object_roty"></p>
+        <p id="object_rotz"></p>
         QR Data : <span id="qrData"></span> <br>
         Alpha : <span id="angleData"></span> <br>
         <input type="text" name="enter" class="enter" value="0" id="angleText"/>
