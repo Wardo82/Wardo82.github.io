@@ -258,7 +258,7 @@
                 // Get the degree from the origin node to the next in the path
                 if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
                   var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
-                  angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
+                  var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
 
                   rotationAngle = (angle + degree - 90) % 360;
                   var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
