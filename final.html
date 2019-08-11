@@ -47,7 +47,7 @@
                     var rotArrow = objectEntity.object3D.rotation;
                     if (objectEntity.object3D.visible) {
                         objectEntity.object3D.rotation.set(
-                            - rotCamera['x'],
+                            0,
                             - rotCamera['y'],
                             rotArrow['z']);
                         var x = document.getElementById('x');
@@ -237,7 +237,7 @@
                   rotationAngle = (angle + degree - 90) % 360;
                   var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
                   try {
-                    objectEntity.object3D.rotation.set(objectEntity.object3D.rotation['x'],
+                    objectEntity.object3D.rotation.set(0,
                                                        objectEntity.object3D.rotation['y'],
                                                        angleRad);
                   } catch (error) {
