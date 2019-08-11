@@ -43,35 +43,46 @@
         try {
             AFRAME.registerComponent('rotation-reader', {
                 tick: function () {
-                    var rotCamera = this.el.object3D.rotation;
-                    var posCamera = this.el.object3D.position;
-                    var rotArrow = objectEntity.object3D.rotation;
-                    if (objectEntity.object3D.visible) {
-                        objectEntity.object3D.rotation.set(
-                            0,
-                            - rotCamera['y'],
-                            rotArrow['z']);
-                    }
-                    var x = document.getElementById('x');
-                    x.innerHTML = rotCamera['x'];
-                    var y = document.getElementById('y');
-                    y.innerHTML = rotCamera['y'];
-                    var z = document.getElementById('z');
-                    z.innerHTML = rotCamera['z'];
-                    var posx = document.getElementById('posx');
-                    posx.innerHTML = posCamera['x'];
-                    var posy = document.getElementById('posy');
-                    posy.innerHTML = posCamera['y'];
-                    var posz = document.getElementById('posz');
-                    posz.innerHTML = posCamera['z'];
+                  // Rotate the arrow accordingly
+                  var rotArrow = objectEntity.object3D.rotation;
+                  if (objectEntity.object3D.visible) {
+                      objectEntity.object3D.rotation.set(
+                          0,
+                          - rotCamera['y'],
+                          rotArrow['z']);
+                  }
 
-                    
-                    var worldx = document.getElementById('worldx');
-                    worldx.innerHTML = posCamera['x'];
-                    var worldy = document.getElementById('worldy');
-                    worldy.innerHTML = posCamera['y'];
-                    var worldz = document.getElementById('worldz');
-                    worldz.innerHTML = posCamera['z'];
+                  var rotCamera = this.el.object3D.rotation;
+                  var posCamera = this.el.object3D.position;
+                  var x = document.getElementById('x');
+                  x.innerHTML = rotCamera['x'];
+                  var y = document.getElementById('y');
+                  y.innerHTML = rotCamera['y'];
+                  var z = document.getElementById('z');
+                  z.innerHTML = rotCamera['z'];
+                  var posx = document.getElementById('posx');
+                  posx.innerHTML = posCamera['x'];
+                  var posy = document.getElementById('posy');
+                  posy.innerHTML = posCamera['y'];
+                  var posz = document.getElementById('posz');
+                  posz.innerHTML = posCamera['z'];
+
+                  var position = new THREE.Vector3();
+                  var rotation = new THREE.Euler();
+                  this.el.object3D.getWorldPosition(position);
+                  this.el.object3D.getWorldRotation(rotation);
+                  var worldx = document.getElementById('worldx');
+                  worldx.innerHTML = position['x'];
+                  var worldy = document.getElementById('worldy');
+                  worldy.innerHTML = position['y'];
+                  var worldz = document.getElementById('worldz');
+                  worldz.innerHTML = position['z'];
+                  var world_rotx = document.getElementById('world_rotx');
+                  world_rotx.innerHTML = rotation['x'];
+                  var world_roty = document.getElementById('world_roty');
+                  world_roty.innerHTML = rotation['y'];
+                  var world_rotz = document.getElementById('world_rotz');
+                  world_rotz.innerHTML = rotation['z'];
                   }
             });
         } catch (error) {
@@ -100,6 +111,9 @@
         <p id="worldx"></p>
         <p id="worldy"></p>
         <p id="worldz"></p>
+        <p id="world_rotx"></p>
+        <p id="world_roty"></p>
+        <p id="world_rotz"></p>
         QR Data : <span id="qrData"></span> <br>
         Alpha : <span id="angleData"></span> <br>
         <input type="text" name="enter" class="enter" value="0" id="angleText"/>
