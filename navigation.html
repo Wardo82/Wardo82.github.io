@@ -50,10 +50,19 @@
                   var rotCamera = this.el.object3D.rotation;
                   var rotArrow = objectEntity.object3D.rotation;
                   if (objectEntity.object3D.visible) {
-                      //objectEntity.object3D.rotation.set(
-                      //    0,
-                      //    - rotCamera['y'],
-                      //    rotArrow['z']);
+                    if (qrOrientation.alpha > 135 && qrOrientation.alpha < 225 ||
+                          qrOrientation.alpha < 45 && qrOrientation.alpha > 315)
+                    {
+                      objectEntity.object3D.rotation.set(
+                         - rotCamera['y'],
+                         - rotCamera['x'],
+                         rotArrow['z']);
+                    }else{}
+                      objectEntity.object3D.rotation.set(
+                         - rotCamera['x'],
+                         - rotCamera['y'],
+                         rotArrow['z']);
+                    }
                   }
 
                   var x = document.getElementById('x');
@@ -249,21 +258,12 @@
                 // Get the degree from the origin node to the next in the path
                 if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
                   var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
-                  var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
+                  angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
 
                   rotationAngle = (angle + degree - 90) % 360;
                   var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
-                  try {
-                    var vector = new THREE.Vector3( ( qrOrientation.Px / window.innerWidth ) * 2 - 1,   //x
-                                                    ( qrOrientation.Py / window.innerHeight ) * 2 + 1,  //y
-                                                      0.5 );
-                    objectEntity.object3D.lookAt(vector);
-                    // objectEntity.object3D.rotation.set(0,
-                    //                                    objectEntity.object3D.rotation['y'],
-                    //                                    angleRad);
-                  } catch (error) {
-                    alert(error.message);
-                  }
+
+                  objectEntity.object3D.rotateZ(angleRad); // Rotate object around z axis
                 }
 
               }else{ // If no QR code exists
