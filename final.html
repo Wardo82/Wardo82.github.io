@@ -160,7 +160,7 @@
           * user is and the second is rendering the arrow to where the user should go next.
           */
           // Variables for the positioning problem
-          var originNode = NULL; // Origin variable. This will have the Vertex of the node where the user is
+          var originNode = null; // Origin variable. This will have the Vertex of the node where the user is
           var destination = graph.getVertexById(destRoom); // Get the Vertex of the destination
           var shortestPath; // Array containning the nodes from origin to destination
           var oldQRCodeValue = ''; // ID of the node where the user currently is
@@ -243,7 +243,7 @@
                 objectEntity.object3D.visible = false; // Hide arrow
                 console.log('Currently there is no readable QR-Code!');
               }
-              
+
                 // Data visualization for testing
                 $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
                 $('#qrData').text(oldQRCodeValue);
