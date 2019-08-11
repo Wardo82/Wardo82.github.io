@@ -44,6 +44,8 @@
             AFRAME.registerComponent('rotation-reader', {
                 tick: function () {
                   // Rotate the arrow accordingly
+                  var rotCamera = this.el.object3D.rotation;
+                  var posCamera = this.el.object3D.position;
                   var rotArrow = objectEntity.object3D.rotation;
                   if (objectEntity.object3D.visible) {
                       objectEntity.object3D.rotation.set(
@@ -52,8 +54,6 @@
                           rotArrow['z']);
                   }
 
-                  var rotCamera = this.el.object3D.rotation;
-                  var posCamera = this.el.object3D.position;
                   var x = document.getElementById('x');
                   x.innerHTML = rotCamera['x'];
                   var y = document.getElementById('y');
