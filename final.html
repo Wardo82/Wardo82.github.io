@@ -45,7 +45,7 @@
                 tick: function () {
                     var rotCamera = this.el.object3D.rotation;
                     var rotArrow = objectEntity.object3D.rotation;
-                    if (origin && autoEnabled) {
+                    if (objectEntity.object3D.visible) {
                         objectEntity.object3D.rotation.set(
                             - rotCamera['x'],
                             - rotCamera['y'],
@@ -164,8 +164,6 @@
           var destination = graph.getVertexById(destRoom); // Get the Vertex of the destination
           var shortestPath; // Array containning the nodes from origin to destination
           var oldQRCodeValue = ''; // ID of the node where the user currently is
-          var autoEnabled = false; // TODO: what is this for?
-          var counter = 0; // TODO: what is this for?
 
           // Variables for the rendering problem
           var gltfModel; // Filename of the object to be rendered
@@ -205,12 +203,9 @@
                 /* Based on qrCode.data the system decides if a new path has to be rendered and what
                 model to display on-top of the marker*/
                 if (qrCode.data != oldQRCodeValue) { // If the scanned id is new
-                  counter = 0; // TODO: Erase if not used
-                  autoEnabled = true; // Enable object rotation
-
                   //Calculate Shortest Path from current position
                   originNode = graph.getVertexById(qrCode.data); // Get vertex with id = qrCode.data
-                  if (origin) {
+                  if (originNode) {
                       objectEntity.object3D.visible = true;
                       shortestPath = graph.getPathBetween(originNode, destination); // Call Dijkstra's algorithm
                   }
@@ -246,14 +241,9 @@
 
               }else{ // If no QR code exists
                 objectEntity.object3D.visible = false; // Hide arrow
-                autoEnabled = false; // Disable rotation of object
-                // TODO: Erase if not used
-                // counter += 300;
-                // if (counter >= 1200) {
-                // }
                 console.log('Currently there is no readable QR-Code!');
               }
-
+              
                 // Data visualization for testing
                 $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
                 $('#qrData').text(oldQRCodeValue);
