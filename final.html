@@ -160,25 +160,22 @@
           * user is and the second is rendering the arrow to where the user should go next.
           */
           // Variables for the positioning problem
-          var origin; // Origin variable. This will have the Vertex of the node where the user is
+          var originNode = NULL; // Origin variable. This will have the Vertex of the node where the user is
           var destination = graph.getVertexById(destRoom); // Get the Vertex of the destination
           var shortestPath; // Array containning the nodes from origin to destination
           var oldQRCodeValue = ''; // ID of the node where the user currently is
-          // TODO: erase if not used.
-          // var nextDestination = ''; // ID of the next node in the computed path
           var autoEnabled = false; // TODO: what is this for?
           var counter = 0; // TODO: what is this for?
 
           // Variables for the rendering problem
-          var gltfModel; // TODO: set a default value. // Filename of the object to be rendered
+          var gltfModel; // Filename of the object to be rendered
           var canvasElement = document.createElement("canvas"); // Canvas element used for scanning and rendering
           var canvasContext = canvasElement.getContext("2d"); // The context of the HTML canvas object
-
           var objects3D = {
               'arrow': 'assets/arrow.gltf',
               'pin': 'assets/pin.gltf',
           }; // Dictionary for the objects that can be displayed
-          var rot = 0; // Initial rotation of the object with respect to the north (The arrow points up)
+          var rotationAngle = 0; // Initial rotation of the object with respect to the north (The arrow points up)
           var qrOrientation = new Translation(); // Object used to compute the orientation of the QRCode
 
           /*
@@ -187,9 +184,6 @@
           * render model based on the QRCode's value
           */
           setInterval(function () {
-            /* TODO: Erase if not necessary
-            rot=(rot+45)%360;
-            objectEntity.setAttribute('rotation', {x:0,y:rot,z:0});*/
             video = document.querySelector("video"); // Get video element that A-Frame creates
 
             if (video && video.readyState === video.HAVE_ENOUGH_DATA) { // If video element is up and running
@@ -211,14 +205,14 @@
                 /* Based on qrCode.data the system decides if a new path has to be rendered and what
                 model to display on-top of the marker*/
                 if (qrCode.data != oldQRCodeValue) { // If the scanned id is new
-                  counter = 0; // TODO: ?
-                  autoEnabled = false; // TODO: ?
+                  counter = 0; // TODO: Erase if not used
+                  autoEnabled = true; // Enable object rotation
 
                   //Calculate Shortest Path from current position
-                  origin = graph.getVertexById(qrCode.data); // Get vertex with id = qrCode.data
+                  originNode = graph.getVertexById(qrCode.data); // Get vertex with id = qrCode.data
                   if (origin) {
                       objectEntity.object3D.visible = true;
-                      shortestPath = graph.getPathBetween(origin, destination); // Call Dijkstra's algorithm
+                      shortestPath = graph.getPathBetween(originNode, destination); // Call Dijkstra's algorithm
                   }
 
                   gltfModel = objects3D['arrow']; //Load Model Arrow
@@ -241,8 +235,8 @@
                   var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
                   var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
 
-                  var rotAngle = (angle + degree - 90) % 360;
-                  var angleRad = qrOrientation.toRadian(rotAngle); // Transform to radians
+                  rotationAngle = (angle + degree - 90) % 360;
+                  var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
                   try {
                     objectEntity.object3D.rotation.set(0, 0, angleRad);
                   } catch (error) {
@@ -252,10 +246,11 @@
 
               }else{ // If no QR code exists
                 objectEntity.object3D.visible = false; // Hide arrow
-                counter += 300;
-                if (counter >= 1200) {
-                    autoEnabled = true;
-                }
+                autoEnabled = false; // Disable rotation of object
+                // TODO: Erase if not used
+                // counter += 300;
+                // if (counter >= 1200) {
+                // }
                 console.log('Currently there is no readable QR-Code!');
               }
 
