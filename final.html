@@ -44,20 +44,35 @@
             AFRAME.registerComponent('rotation-reader', {
                 tick: function () {
                     var rotCamera = this.el.object3D.rotation;
+                    var posCamera = this.el.object3D.position;
                     var rotArrow = objectEntity.object3D.rotation;
                     if (objectEntity.object3D.visible) {
                         objectEntity.object3D.rotation.set(
                             0,
                             - rotCamera['y'],
                             rotArrow['z']);
-                        var x = document.getElementById('x');
-                        x.innerHTML = rotCamera['x'];
-                        var y = document.getElementById('y');
-                        y.innerHTML = rotCamera['y'];
-                        var z = document.getElementById('z');
-                        z.innerHTML = rotCamera['z'];
                     }
-                }
+                    var x = document.getElementById('x');
+                    x.innerHTML = rotCamera['x'];
+                    var y = document.getElementById('y');
+                    y.innerHTML = rotCamera['y'];
+                    var z = document.getElementById('z');
+                    z.innerHTML = rotCamera['z'];
+                    var posx = document.getElementById('posx');
+                    posx.innerHTML = posCamera['x'];
+                    var posy = document.getElementById('posy');
+                    posy.innerHTML = posCamera['y'];
+                    var posz = document.getElementById('posz');
+                    posz.innerHTML = posCamera['z'];
+
+                    
+                    var worldx = document.getElementById('worldx');
+                    worldx.innerHTML = posCamera['x'];
+                    var worldy = document.getElementById('worldy');
+                    worldy.innerHTML = posCamera['y'];
+                    var worldz = document.getElementById('worldz');
+                    worldz.innerHTML = posCamera['z'];
+                  }
             });
         } catch (error) {
             alert(error.message);
@@ -72,8 +87,8 @@
             <a-asset-item id="arrow" src="assets/arrow.gltf"></a-asset-item>
         </a-assets>
 
-        <a-entity>
-          <a-entity camera="active: true" look-controls rotation-reader data-aframe-default-camera>
+        <a-entity id="rig">
+          <a-entity id="camera" camera="active: true" look-controls rotation-reader data-aframe-default-camera>
               <a-entity id="arrowObject" gltf-model="#arrow" position="0 0 -0.6" rotation="0 0 0"
                   scale="0.05 0.05 0.05"
                   visible="false"></a-entity>
@@ -82,6 +97,9 @@
     </a-scene>
 
     <div class="qr-data-info">
+        <p id="worldx"></p>
+        <p id="worldy"></p>
+        <p id="worldz"></p>
         QR Data : <span id="qrData"></span> <br>
         Alpha : <span id="angleData"></span> <br>
         <input type="text" name="enter" class="enter" value="0" id="angleText"/>
@@ -91,6 +109,9 @@
         <p id="x"></p>
         <p id="y"></p>
         <p id="z"></p>
+        <p id="posx"></p>
+        <p id="posy"></p>
+        <p id="posz"></p>
         <a href="#" class="btn-clear">Clear</a>
     </div>
 
