@@ -9,6 +9,7 @@
     <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
     <script src="https://cozmo.github.io/jsQR/jsQR.js"></script>
+    <script src="js/threex.objcoord.js"></script>
     <!-- Load modules for Queues, Vertices, Graph and Hashmaps-->
     <script type="text/javascript" src="js/Vertex.js"></script>
     <script type="text/javascript" src="js/PriorityQueue.js"></script>
@@ -18,8 +19,8 @@
     <style type="text/css">
         .qr-data-info {
             position: fixed;
-            top: 0px;
-            left: 0px;
+            bottom: 0px;
+            right: 0px;
             background: rgba(204, 204, 204, 0.3);
             padding: 5px;
         }
@@ -33,7 +34,6 @@
         }
 
         .tool-bar .btn-clear {
-            font-size: 20px;
             text-decoration: none;
             color: black;
         }
@@ -45,7 +45,6 @@
                 tick: function () {
                   // Rotate the arrow accordingly
                   var rotCamera = this.el.object3D.rotation;
-                  var posCamera = this.el.object3D.position;
                   var rotArrow = objectEntity.object3D.rotation;
                   if (objectEntity.object3D.visible) {
                       objectEntity.object3D.rotation.set(
@@ -60,21 +59,8 @@
                   y.innerHTML = rotCamera['y'];
                   var z = document.getElementById('z');
                   z.innerHTML = rotCamera['z'];
-                  var posx = document.getElementById('posx');
-                  posx.innerHTML = posCamera['x'];
-                  var posy = document.getElementById('posy');
-                  posy.innerHTML = posCamera['y'];
-                  var posz = document.getElementById('posz');
-                  posz.innerHTML = posCamera['z'];
 
-                  var position = objectEntity.object3D.position;
                   var rotation = objectEntity.object3D.rotation;
-                  var objectx = document.getElementById('objectx');
-                  objectx.innerHTML = position['x'];
-                  var objecty = document.getElementById('objecty');
-                  objecty.innerHTML = position['y'];
-                  var objectz = document.getElementById('objectz');
-                  objectz.innerHTML = position['z'];
                   var object_rotx = document.getElementById('object_rotx');
                   object_rotx.innerHTML = rotation['x'];
                   var object_roty = document.getElementById('object_roty');
@@ -106,9 +92,6 @@
     </a-scene>
 
     <div class="qr-data-info">
-        <p id="objectx"></p>
-        <p id="objecty"></p>
-        <p id="objectz"></p>
         <p id="object_rotx"></p>
         <p id="object_roty"></p>
         <p id="object_rotz"></p>
@@ -121,9 +104,6 @@
         <p id="x"></p>
         <p id="y"></p>
         <p id="z"></p>
-        <p id="posx"></p>
-        <p id="posy"></p>
-        <p id="posz"></p>
         <a href="#" class="btn-clear">Clear</a>
     </div>
 
@@ -217,6 +197,7 @@
           * Try to read a QR Code every 300 Milliseconds and load, change and
           * render model based on the QRCode's value
           */
+          // TODO: Consider change to requestAnimationFrame
           setInterval(function () {
             video = document.querySelector("video"); // Get video element that A-Frame creates
 

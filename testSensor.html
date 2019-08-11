@@ -45,7 +45,7 @@
                 tick: function () {
                     var rotCamera = this.el.object3D.rotation;
                     var rotArrow = objectEntity.object3D.rotation;
-                    if (origin && autoEnabled) {
+                    if (originNode && autoEnabled) {
                         objectEntity.object3D.rotation.set(
                             - rotCamera['x'],
                             - rotCamera['y'],
@@ -155,7 +155,7 @@
             var rot = 0;
 
             var transLat = new Translation();
-            var origin;
+            var originNode;
             var destRoom = rooms.getRoom("01.04.005");
             var destination = graph.getVertexById(destRoom);
 
@@ -173,13 +173,13 @@
                     var qrCode = jsQR(imageData.data, imageData.width, imageData.height);
                     if (qrCode && qrCode.data != '' && qrCode.data != oldQRCodeValue) {
                         counter = 0;
-                        autoEnabled = false;
+                        autoEnabled = true;
                         //Calculate Shortest Path from current Node
-                        origin = graph.getVertexById(qrCode.data);
-                        if (origin) {
+                        originNode = graph.getVertexById(qrCode.data);
+                        if (originNode) {
                             objectEntity.object3D.visible = true;
                         }
-                        var shortestPath = graph.getPathBetween(origin, destination);
+                        var shortestPath = graph.getPathBetween(originNode, destination);
 
                         var degree = shortestPath[0].getDegree(shortestPath[1].id);
 
