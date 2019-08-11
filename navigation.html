@@ -255,8 +255,8 @@
                   var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
                   try {
                     var vector = new THREE.Vector3( ( qrOrientation.Px / window.innerWidth ) * 2 - 1,   //x
-                                                    -( qrOrientation.Py / window.innerHeight ) * 2 + 1,  //y
-                                                      0.5 ).unproject(camera);
+                                                    ( qrOrientation.Py / window.innerHeight ) * 2 + 1,  //y
+                                                      0.5 );
                     objectEntity.object3D.lookAt(vector);
                     // objectEntity.object3D.rotation.set(0,
                     //                                    objectEntity.object3D.rotation['y'],

@@ -197,8 +197,7 @@
           * Try to read a QR Code every 300 Milliseconds and load, change and
           * render model based on the QRCode's value
           */
-          // TODO: Consider change to requestAnimationFrame
-          setInterval(function () {
+          function main() {
             video = document.querySelector("video"); // Get video element that A-Frame creates
 
             if (video && video.readyState === video.HAVE_ENOUGH_DATA) { // If video element is up and running
@@ -271,8 +270,11 @@
                 $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
                 $('#qrData').text(oldQRCodeValue);
               }
-            });
 
+              requestAnimationFrame(main);
+            };
+            requestAnimationFrame(main);
+            
         } catch (error) {
             alert(error.message);
         }
