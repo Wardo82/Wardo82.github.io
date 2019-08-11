@@ -42,6 +42,9 @@
     <script type="text/javascript">
         try {
             AFRAME.registerComponent('rotation-reader', {
+                init: function() {
+                  camera = document.querySelector('a-entity[camera]').components.camera.camera;
+                },
                 tick: function () {
                   // Rotate the arrow accordingly
                   var rotCamera = this.el.object3D.rotation;
@@ -181,7 +184,7 @@
           var oldQRCodeValue = ''; // ID of the node where the user currently is
 
           // Variables for the rendering problem
-          var camera = document.querySelector('a-entity[camera]').components.camera.camera; // Main camera object
+          var camera;// Main camera object
           var gltfModel; // Filename of the object to be rendered
           var canvasElement = document.createElement("canvas"); // Canvas element used for scanning and rendering
           var canvasContext = canvasElement.getContext("2d"); // The context of the HTML canvas object
