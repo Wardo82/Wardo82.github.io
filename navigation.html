@@ -130,12 +130,12 @@
           * become a more thorough description of the building.
           */
           //Assign Rooms to Nodes
-          var rooms = new RoomStore(origin+'assets/rooms.txt');
-          // rooms.addFinger("00.01.*", 1);
-          // rooms.addFinger("00.02.*", 2);
-          // rooms.addFinger("01.03.*", 3);
-          // rooms.addFinger("01.04.*", 4);
-          // rooms.addRoom("01.04.005", 5);
+          //TODO: var rooms = new RoomStore('assets/rooms.txt');
+          rooms.addFinger("00.01.*", 1);
+          rooms.addFinger("00.02.*", 2);
+          rooms.addFinger("01.03.*", 3);
+          rooms.addFinger("01.04.*", 4);
+          rooms.addRoom("01.04.005", 5);
 
           /*
           * 2.- Build graph from RoomStore: Second, build our model representation (a graph)
@@ -143,7 +143,7 @@
           * the nodes
           */
           /* TODO: Change UndirectedGraph constructor to initialize from a file
-          var graph = new UndirectedGraph(file: "/assets/files/nodes.json");*/
+          var graph = new UndirectedGraph("assets/nodes.json");*/
           //Build Graph
           var graph = new UndirectedGraph();
           var a = new Vertex(1);
@@ -217,7 +217,7 @@
               // Get QR code object using jsQR library. It takes an image a tries to detect the QR within it
               var qrCode = jsQR(imageData.data, imageData.width, imageData.height);
 
-              if(qrCode && qrCode.data != ''){ // If QR code exists and data is not empty
+              if(qrCode && qrCode.data != undefined){ // If QR code exists and data is not empty
                 counter = 0;
                 /*
                 * 4.1.- User positioning: Get user position from camera
@@ -226,6 +226,7 @@
                 /* Based on qrCode.data the system decides if a new path has to be rendered and what
                 model to display on-top of the marker*/
                 if (qrCode.data != oldQRCodeValue) { // If the scanned id is new
+                  oldQRCodeValue = QRCode.data; // Update old scanned value
                   //Calculate Shortest Path from current position
                   originNode = graph.getVertexById(qrCode.data); // Get vertex with id = qrCode.data
                   if (originNode) {
@@ -234,7 +235,9 @@
                   }
 
                   gltfModel = objects3D['arrow']; //Load Model Arrow
-                }if (qrCode.data == destRoom) { // If destination is reached
+                }
+
+                if (qrCode.data == destRoom) { // If destination is reached
                   gltfModel = objects3D['pin']; //Load Model Pin
                 }
 
