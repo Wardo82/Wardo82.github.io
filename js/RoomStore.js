@@ -12,9 +12,9 @@ function RoomStore(){
 RoomStore.prototype.addRoom = function(room, node) {
     if(!this.rooms.has(room)) {
         this.rooms.set(room, node);
-        console.log("Added room " + room + " and assigned node " + node + "to it.");
+        //console.log("Added room " + room + " and assigned node " + node + "to it.");
     } else {
-        console.log("Room " + room + " already exists!");
+        //console.log("Room " + room + " already exists!");
     }
 }
 
@@ -26,9 +26,9 @@ RoomStore.prototype.addRoom = function(room, node) {
 RoomStore.prototype.updateRoom = function(room, node) {
     if(this.rooms.has(room)) {
         this.rooms.set(room, node);
-        console.log("Updated room " + room + " to node " + node + ".");
+        //console.log("Updated room " + room + " to node " + node + ".");
     } else {
-        console.log("Room " + room + " does not exist!");
+        //console.log("Room " + room + " does not exist!");
     }
 }
 
@@ -43,7 +43,7 @@ RoomStore.prototype.addFinger = function(room, node) {
     for(var i=0; i< 100; i++){
         temproom=rsplit[0]+i.toString().padStart(3, '0');
         this.rooms.set(temproom, node);
-        console.log("Added room " + temproom + " and assigned node " + node + "to it.");
+        //console.log("Added room " + temproom + " and assigned node " + node + "to it.");
     }
 }
 
@@ -54,7 +54,7 @@ RoomStore.prototype.getRoom = function(room) {
     if(this.rooms.has(room)) {
         return this.rooms.get(room);
     } else {
-        console.log("Room " + room + " does not exist!");
+        //console.log("Room " + room + " does not exist!");
     }
 }
 /*
@@ -65,7 +65,7 @@ RoomStore.prototype.deleteNode = function(node) {
     for( var [k,v] of this.rooms) {
         if(v==node) {
             this.rooms.delete(k);
-            console.log("Deleted room "+ k +".")
+            //console.log("Deleted room "+ k +".")
         }
     }
 }
@@ -76,10 +76,10 @@ RoomStore.prototype.deleteNode = function(node) {
 RoomStore.prototype.deleteRoom = function(room) {
     if(this.rooms.has(room)){
         this.rooms.delete(room);
-        console.log("Deleted room "+ room +".")
+        //console.log("Deleted room "+ room +".")
     }
     else {
-        console.log("Room " + room + " does not exist");
+        //console.log("Room " + room + " does not exist");
     }
 }
 
@@ -88,11 +88,10 @@ RoomStore.prototype.deleteRoom = function(room) {
 */
 RoomStore.prototype.printAll = function() {
     for(var [k,v] of this.rooms) {
-        console.log("Room: " + k + " Node: "+ v);
+        //console.log("Room: " + k + " Node: "+ v);
     }
 }
 
 RoomStore.prototype.getSize = function() {
     return this.rooms.size;
 }
-
