@@ -3,9 +3,16 @@
 
 // Graph implementation of building's nodes for navigation.
 // Note: 'Vertex' and 'Node' are used interchangebly.
-function UndirectedGraph(){
+function UndirectedGraph(file){
   this.edges = {}; // Adjacency list of nodes in graph. This is used for computation of Dijkstra
   this.nodes = {}; // Dictionary of existing nodes of the form {ID: Vertex}. This is used as record of nodes
+
+  // Load constructor from files
+  if (file) {
+    var nodes = JSON.parse(file);
+    console.log(nodes);
+
+  }
 }
 
 // ===== Method declaration =====

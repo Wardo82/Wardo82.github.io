@@ -4,14 +4,9 @@ function RoomStore(file){
 
     // Load constructor from files
     if (file) {
-      var request = new XMLHttpRequest();
-      request.open('get', file, true);
-      request.onreadystatechange = function() {
-        if(request.readyState==4) {
-        console.log(request.responseText);
-        }
-      }
-      request.send(null);
+      var rooms = JSON.parse(file);
+      console.log(rooms);
+
     }
 
     console.log("Created Map for Rooms and Nodes");

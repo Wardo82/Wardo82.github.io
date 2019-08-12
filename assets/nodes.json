@@ -1,22 +1,22 @@
 {
   "nodes" : {
-    1: {
-      "neighbors":{2:{"distance":10, "degree":90}},
+    "1": {
+      "neighbors":{"2":{"distance":10, "degree":90}},
       "coordinates":{"x":0, "y":0, "z":0}
     },
-    2: {
-      "neighbors":{1:{"distance":10, "degree":270},
-                   2:{"distance":10, "degree":90}},
+    "2": {
+      "neighbors":{"1":{"distance":10, "degree":270},
+                   "2":{"distance":10, "degree":90}},
       "coordinates":{"x":0, "y":0, "z":0}
     },
-    3: {
-      "neighbors":{2:{"distance":10, "degree":270}, 4:{"distance":10, "degree":180}, 5:{"distance":10, "degree":0}},
+    "3": {
+      "neighbors":{"2":{"distance":10, "degree":270}, "4":{"distance":10, "degree":180}, "5":{"distance":10, "degree":0}},
       "coordinates":{"x":0, "y":0, "z":0}},
-    4: {
-      "neighbors":{3:{"distance":10, "degree":0}},
+    "4": {
+      "neighbors":{"3":{"distance":10, "degree":0}},
       "coordinates":{"x":0, "y":0, "z":0}},
-    5: {
-      "neighbors":{3:{"distance":10, "degree":180}},
+    "5": {
+      "neighbors":{"3":{"distance":10, "degree":180}},
       "coordinates":{"x":0, "y":0, "z":0}}
   }
 }
