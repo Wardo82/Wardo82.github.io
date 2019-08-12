@@ -55,11 +55,11 @@
                     {
                       objectEntity.object3D.rotation.set(
                          0,
-                         - rotCamera['x'],
+                         - Math.abs(rotCamera['x']),
                          rotArrow['z']);
                     }else{
                       objectEntity.object3D.rotation.set(
-                         - rotCamera['x'],
+                         - Math.abs(rotCamera['x']),
                          0,
                          rotArrow['z']);
                     }
