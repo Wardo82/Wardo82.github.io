@@ -129,15 +129,13 @@
           * with all data regarding the registered rooms. It can start small with a txt file to later
           * become a more thorough description of the building.
           */
-          /* TODO: Change the RoomStore constructor to initialize from a file
-          var rooms = new RoomStore(file: "/assets/files/rooms.txt"); */
           //Assign Rooms to Nodes
-          var rooms = new RoomStore();
-          rooms.addFinger("00.01.*", 1);
-          rooms.addFinger("00.02.*", 2);
-          rooms.addFinger("01.03.*", 3);
-          rooms.addFinger("01.04.*", 4);
-          rooms.addRoom("01.04.005", 5);
+          var rooms = new RoomStore(origin+'assets/rooms.txt');
+          // rooms.addFinger("00.01.*", 1);
+          // rooms.addFinger("00.02.*", 2);
+          // rooms.addFinger("01.03.*", 3);
+          // rooms.addFinger("01.04.*", 4);
+          // rooms.addRoom("01.04.005", 5);
 
           /*
           * 2.- Build graph from RoomStore: Second, build our model representation (a graph)
@@ -160,18 +158,13 @@
           graph.addVertex(d);
           graph.addVertex(e);
 
-          a.setDistance(b, 10);
-          b.setDistance(c, 10);
-          c.setDistance(d, 10);
-          c.setDistance(e, 10);
-
-          graph.addEdge(a, b, 90);
-          graph.addEdge(b, c, 90);
-          graph.addEdge(c, e, 180);
-          graph.addEdge(c, d, 0);
+          graph.addEdge(a, b, 10, 90);
+          graph.addEdge(b, c, 10, 90);
+          graph.addEdge(c, e, 10, 180);
+          graph.addEdge(c, d, 10, 0);
 
           // Compute the path between a, b to test functionality
-          console.log(graph.Dijkstra(a, b));
+          console.log(graph.Dijkstra(a, e));
 
           /*
           * 3.- Get user request: Get the users search request

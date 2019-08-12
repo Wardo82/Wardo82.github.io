@@ -1,0 +1,8 @@
+{
+  "nodes" : [
+  { "id": 1, "neighbors":{2:{10, 90}}, "coordinates":{"x":0, "y":0, "z":0}},
+  { "id": 2, "neighbors":{1:{10, 270}, 2:{10, 90}}, "coordinates":{"x":0, "y":0, "z":0}},
+  { "id": 3, "neighbors":{2:{10, 270}, 4:{10, 180}, 5:{0, 0}}, "coordinates":{"x":0, "y":0, "z":0}},
+  { "id": 4, "neighbors":{3:{10, 0}}, "coordinates":{"x":0, "y":0, "z":0}},
+  { "id": 5, "neighbors":{3:{10, 180}}, "coordinates":{"x":0, "y":0, "z":0}}]
+}

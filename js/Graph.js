@@ -16,13 +16,12 @@ UndirectedGraph.prototype.addVertex = function (vertex) {
   this.nodes[vertex.id] = vertex; // Keeps it on record
 };
 
-UndirectedGraph.prototype.addEdge = function (vertex1, vertex2, degree) {
+UndirectedGraph.prototype.addEdge = function (vertex1, vertex2, distance, degree) {
   // Adds connection between two nodes
   // @param vertex1: Node of type Vertex
   // @param vertex2: Node of type Vertex
   // @param degree: Value of type int representing the degree between vertex1 and
   // vertex2 with respect to the horizontal line that goes through vertex1
-  var distance = vertex1.getDistance(vertex2); // Get distance btw. nodes
 
   var v1 = vertex1.id;
   var v2 = vertex2.id;
@@ -30,8 +29,8 @@ UndirectedGraph.prototype.addEdge = function (vertex1, vertex2, degree) {
   this.edges[v1][v2] = distance;
   this.edges[v2][v1] = distance;
   // Add connection to nodes record
-  this.nodes[v1].addNeighbor(vertex2, degree);
-  this.nodes[v2].addNeighbor(vertex1, (180+degree)%360);
+  this.nodes[v1].addNeighbor(vertex2, distance, degree);
+  this.nodes[v2].addNeighbor(vertex1, distance, (180+degree)%360);
 };
 
 UndirectedGraph.prototype.removeEdge = function (vertex1, vertex2) {

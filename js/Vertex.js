@@ -15,11 +15,10 @@ Vertex.prototype.getDegree = function (dest) {
 }
 
 // ===== Method declaration =====
-Vertex.prototype.addNeighbor = function (neighbor, degree) {
+Vertex.prototype.addNeighbor = function (neighbor, distance, degree) {
   // Adds a neighbor to the node.
   // @param neighbor: Node of type Vertex
   // @param degree: Number of type int that represents the degree to neighbor with respect to the horizontal line of this node.
-  var distance = this.getDistance(neighbor); // TODO: In future versions, the coordinates could be used to calculate the distance.
   this.neighbors[neighbor.id] =  {distance, degree};
 };
 
@@ -43,7 +42,7 @@ Vertex.prototype.getDistance = function (neighbor) {
   // @param neighbor: Node of type Vertex from which to calculate distance.
   var distance = 1;
   if(this.neighbors[neighbor.id] != undefined) {
-    distance = this.neighbors[neighbor.id];
+    distance = this.neighbors[neighbor.id]['distance'];
   }
 
   return distance;
@@ -53,8 +52,8 @@ Vertex.prototype.setDistance = function (neighbor, distance) {
   // Sets the distance between this and neighbor to be used as weights of the graph. Default is 1.
   // @param neighbor: Node of type Vertex
   // @param distance: Distance between this and neighbor
-  this.neighbors[neighbor.id] = distance;
-  neighbor.neighbors[this.id] = distance;
+  this.neighbors[neighbor.id]['distance'] = distance;
+  neighbor.neighbors[this.id]['distance'] = distance;
 };
 
 // == Set for QR code ==

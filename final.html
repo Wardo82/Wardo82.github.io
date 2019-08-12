@@ -52,22 +52,7 @@
                           - rotCamera['y'],
                           rotArrow['z']);
                   }
-
-                  var x = document.getElementById('x');
-                  x.innerHTML = rotCamera['x'];
-                  var y = document.getElementById('y');
-                  y.innerHTML = rotCamera['y'];
-                  var z = document.getElementById('z');
-                  z.innerHTML = rotCamera['z'];
-
-                  var rotation = objectEntity.object3D.rotation;
-                  var object_rotx = document.getElementById('object_rotx');
-                  object_rotx.innerHTML = rotation['x'];
-                  var object_roty = document.getElementById('object_roty');
-                  object_roty.innerHTML = rotation['y'];
-                  var object_rotz = document.getElementById('object_rotz');
-                  object_rotz.innerHTML = rotation['z'];
-                  }
+                }
             });
         } catch (error) {
             alert(error.message);
@@ -90,23 +75,6 @@
           </a-entity>
         </a-entity>
     </a-scene>
-
-    <div class="qr-data-info">
-        <p id="object_rotx"></p>
-        <p id="object_roty"></p>
-        <p id="object_rotz"></p>
-        QR Data : <span id="qrData"></span> <br>
-        Alpha : <span id="angleData"></span> <br>
-        <input type="text" name="enter" class="enter" value="0" id="angleText"/>
-    </div>
-
-    <div class="tool-bar">
-        <p id="x"></p>
-        <p id="y"></p>
-        <p id="z"></p>
-        <a href="#" class="btn-clear">Clear</a>
-    </div>
-
 
     <script type="text/javascript">
         try {
@@ -274,7 +242,7 @@
               requestAnimationFrame(main);
             };
             requestAnimationFrame(main);
-            
+
         } catch (error) {
             alert(error.message);
         }

@@ -1,6 +1,19 @@
 
-function RoomStore(){
+function RoomStore(file){
     this.rooms = new Map();
+
+    // Load constructor from files
+    if (file) {
+      var request = new XMLHttpRequest();
+      request.open('get', file, true);
+      request.onreadystatechange = function() {
+        if(request.readyState==4) {
+        console.log(request.responseText);
+        }
+      }
+      request.send(null);
+    }
+
     console.log("Created Map for Rooms and Nodes");
 }
 
