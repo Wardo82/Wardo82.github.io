@@ -134,15 +134,15 @@ function main() {
       if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
         if (qrCode.data != destRoom) { // If destination is reached
           var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
-          var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
-
-          rotationAngle = (angle + degree - 90) % 360;
-          var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
-
-          objectEntity.object3D.rotation.set(objectEntity.object3D.rotation['x'],
-                                            objectEntity.object3D.rotation['y'],
-                                            angleRad);
         }
+        var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
+
+        rotationAngle = (angle + degree - 90) % 360;
+        var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
+
+        objectEntity.object3D.rotation.set(0,
+                                             objectEntity.object3D.rotation['y'],
+                                             angleRad);
       }
 
     }else{ // If no QR code exists
