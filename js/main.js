@@ -110,14 +110,32 @@ function main() {
             shortestPath = graph.getPathBetween(originNode, destination); // Call Dijkstra's algorithm
         }
 
-        gltfModel = objects3D['arrow']; //Load Model Arrow
       }
 
-      if (qrCode.data == destRoom) { // If destination is reached
-        gltfModel = objects3D['pin']; //Load Model Pin
-        objectEntity.object3D.rotation.set(90,
-                                           objectEntity.object3D.rotation['y'],
-                                           objectEntity.object3D.rotation['z']);
+
+      /*
+      * 4.2.- Scene rendering: render the objects accordingly in the scene
+      */
+      // Get the degree from the origin node to the next in the path
+      if(shortestPath) { // If there is a computed shortest path and a scanned
+        if (qrCode.data != destRoom) { // If destination is not reached
+          gltfModel = objects3D['arrow']; //Load Model Arrow
+          var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
+
+          var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
+
+          rotationAngle = (angle + degree - 90) % 360;
+          var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
+
+          objectEntity.object3D.rotation.set(0,
+                                               objectEntity.object3D.rotation['y'],
+                                               angleRad);
+        }else if (qrCode.data == destRoom) { // If destination is reached
+          gltfModel = objects3D['pin']; //Load Model Pin
+          objectEntity.object3D.rotation.set(90,
+                                             objectEntity.object3D.rotation['y'],
+                                             objectEntity.object3D.rotation['z']);
+        }
       }
 
       if (gltfModel) { // If a gltf model was assigned
@@ -125,24 +143,6 @@ function main() {
         objectEntity.setAttribute('gltf-model', 'url(' + gltfModel + ')');
       } else {
         alert('Cannot find'+ gltfModel +'! Please check assets folder!');
-      }
-
-      /*
-      * 4.2.- Scene rendering: render the objects accordingly in the scene
-      */
-      // Get the degree from the origin node to the next in the path
-      if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
-        if (qrCode.data != destRoom) { // If destination is reached
-          var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
-        }
-        var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
-
-        rotationAngle = (angle + degree - 90) % 360;
-        var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
-
-        objectEntity.object3D.rotation.set(0,
-                                             objectEntity.object3D.rotation['y'],
-                                             angleRad);
       }
 
     }else{ // If no QR code exists
