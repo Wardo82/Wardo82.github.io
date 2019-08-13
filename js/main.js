@@ -111,8 +111,13 @@ function main() {
         }
 
         gltfModel = objects3D['arrow']; //Load Model Arrow
-      }if (qrCode.data == destRoom) { // If destination is reached
+      }
+
+      if (qrCode.data == destRoom) { // If destination is reached
         gltfModel = objects3D['pin']; //Load Model Pin
+        objectEntity.object3D.rotation.set(90,
+                                           objectEntity.object3D.rotation['y'],
+                                           objectEntity.object3D.rotation['z']);
       }
 
       if (gltfModel) { // If a gltf model was assigned
@@ -127,17 +132,16 @@ function main() {
       */
       // Get the degree from the origin node to the next in the path
       if(shortestPath && qrCode) { // If there is a computed shortest path and a scanned
-        var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
-        var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
+        if (qrCode.data != destRoom) { // If destination is reached
+          var degree = shortestPath[0].getDegree(shortestPath[1].id); // Get angle for next node
+          var angle = qrOrientation.getOrientation(qrCode); //Get orientation of qrCode
 
-        rotationAngle = (angle + degree - 90) % 360;
-        var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
-        try {
-          objectEntity.object3D.rotation.set(0,
-                                             objectEntity.object3D.rotation['y'],
-                                             angleRad);
-        } catch (error) {
-          alert(error.message);
+          rotationAngle = (angle + degree - 90) % 360;
+          var angleRad = qrOrientation.toRadian(rotationAngle); // Transform to radians
+
+          objectEntity.object3D.rotation.set(objectEntity.object3D.rotation['x'],
+                                            objectEntity.object3D.rotation['y'],
+                                            angleRad);
         }
       }
 
@@ -149,9 +153,6 @@ function main() {
       console.log('Currently there is no readable QR-Code!');
     }
 
-      // Data visualization for testing
-      $('#angleData').text("Deg: "+angle + " - Rad: " + angleRad);
-      $('#qrData').text(oldQRCodeValue);
     }
 
     requestAnimationFrame(main);
