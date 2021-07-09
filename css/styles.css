@@ -1,0 +1,12 @@
+/* --- Navigation Bar --- */
+#nav-bar {
+  position: fixed;
+  bottom: 5%;
+  width: 100%;
+}
+
+#nav-bar ul li {
+  display: inline;
+  font: 40px Arial, sans-serif;
+  padding-left: 50px;
+}
